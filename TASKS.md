@@ -64,13 +64,16 @@ pre-commit install
 - 개발 문서 작성
 - 완료: 2025-08-08 00:15
 
-⬜ **TASK-006**: Pre-commit 설정
+✅ **TASK-006**: Pre-commit 설정
 ```yaml
 # .pre-commit-config.yaml
-- black (코드 포맷팅)
-- ruff (린팅)
-- mypy (타입 체크)
+- black (코드 포맷팅) ✅
+- ruff (린팅) ✅
+- mypy (타입 체크) ✅
+- django-upgrade ✅
+- 유틸리티 훅들 (trailing-whitespace, end-of-file-fixer 등) ✅
 ```
+- 완료: 2025-08-08
 
 ---
 
@@ -237,7 +240,7 @@ MIDDLEWARE = ['django_i18n_noprefix.middleware.NoPrefixLocaleMiddleware']
 ⬜ **TASK-209**: tox 설정
 ```ini
 # tox.ini
-envlist = 
+envlist =
     py{38,39,310,311}-django42
     py{310,311,312}-django50
 ```
