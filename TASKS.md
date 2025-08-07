@@ -166,9 +166,12 @@ class I18nNoPrefixConfig(AppConfig):
 - 시스템 체크 추가 (미들웨어, 언어 설정, URL 검증)
 - 완료: 2025-08-07 20:35
 
-⬜ **TASK-112**: 기본 템플릿 제공
-- `templates/i18n_noprefix/language_selector.html`
-- Bootstrap/Tailwind 호환 버전
+✅ **TASK-112**: 기본 템플릿 제공
+- CSS 스타일 파일 3종 (Bootstrap 5, Tailwind, Vanilla CSS)
+- 각 프레임워크별 예제 HTML 페이지
+- 스타일 가이드 문서 (README.md)
+- 다크모드, RTL, 반응형 지원
+- 완료: 2025-08-07 22:30
 
 ---
 
@@ -388,14 +391,14 @@ twine upload dist/*
 ### 전체 진행률
 ```
 Phase 0: [✅✅✅✅⬜⬜] 67% (4/6)
-Phase 1: [✅✅✅✅✅✅✅✅✅✅✅⬜] 92% (11/12)
+Phase 1: [✅✅✅✅✅✅✅✅✅✅✅✅] 100% (12/12)
 Phase 2: [✅✅✅✅✅⬜⬜⬜⬜⬜] 50% (5/10)
 Phase 3: [⬜⬜⬜⬜⬜⬜] 0% (0/6)
 Phase 4: [⬜⬜⬜⬜⬜] 0% (0/5)
 Phase 5: [⬜⬜⬜⬜⬜⬜] 0% (0/6)
 Phase 6: [⬜⬜⬜⬜] 0% (0/4)
 
-전체: 20/49 작업 완료 (41%)
+전체: 21/49 작업 완료 (43%)
 ```
 
 ### 우선순위별 분류
