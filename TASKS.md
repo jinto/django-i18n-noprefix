@@ -145,12 +145,16 @@ def is_valid_language(lang_code):
 - `{% is_current_language %}` - 현재 언어 체크 필터
 - 완료: 2025-08-07 21:10 (Django i18n 태그와 중복 제거)
 
-⬜ **TASK-110**: 언어 선택기 템플릿 태그
+✅ **TASK-110**: 언어 선택기 템플릿 태그
 ```python
-@register.inclusion_tag('i18n_noprefix/language_selector.html')
-def language_selector():
-    """언어 선택 드롭다운 생성"""
+@register.simple_tag(takes_context=True)
+def language_selector(context, style='dropdown', next_url=None):
+    """언어 선택 위젯 렌더링 (dropdown/list/inline 스타일)"""
 ```
+- 3가지 스타일 템플릿 구현 완료
+- 접근성 속성 포함
+- 테스트 작성 완료
+- 완료: 2025-08-07 22:00
 
 ### 1.5 Django 앱 설정
 ✅ **TASK-111**: apps.py 작성
@@ -384,14 +388,14 @@ twine upload dist/*
 ### 전체 진행률
 ```
 Phase 0: [✅✅✅✅⬜⬜] 67% (4/6)
-Phase 1: [✅✅✅✅✅✅✅✅✅✅⬜⬜] 83% (10/12)
+Phase 1: [✅✅✅✅✅✅✅✅✅✅✅⬜] 92% (11/12)
 Phase 2: [✅✅✅✅✅⬜⬜⬜⬜⬜] 50% (5/10)
 Phase 3: [⬜⬜⬜⬜⬜⬜] 0% (0/6)
 Phase 4: [⬜⬜⬜⬜⬜] 0% (0/5)
 Phase 5: [⬜⬜⬜⬜⬜⬜] 0% (0/6)
 Phase 6: [⬜⬜⬜⬜] 0% (0/4)
 
-전체: 19/49 작업 완료 (39%)
+전체: 20/49 작업 완료 (41%)
 ```
 
 ### 우선순위별 분류

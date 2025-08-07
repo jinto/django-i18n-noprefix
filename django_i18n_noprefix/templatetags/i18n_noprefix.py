@@ -66,7 +66,7 @@ def is_current_language(lang_code):
     return lang_code == translation.get_language()
 
 
-@register.inclusion_tag('i18n_noprefix/language_selector.html', takes_context=True)
+@register.simple_tag(takes_context=True)
 def language_selector(context, style='dropdown', next_url=None):
     """
     Render a language selector widget.
@@ -85,6 +85,7 @@ def language_selector(context, style='dropdown', next_url=None):
         {% language_selector style='inline' next_url='/dashboard/' %}
     """
     from django.conf import settings
+    from django.template.loader import render_to_string
     
     current_language = translation.get_language()
     
@@ -105,12 +106,11 @@ def language_selector(context, style='dropdown', next_url=None):
         'inline': 'i18n_noprefix/language_selector_inline.html',
     }
     
-    # Update template name if different style is requested
-    if style in template_map and style != 'dropdown':
-        # This will be handled by the template selection
-        pass
+    # Select the appropriate template
+    template_name = template_map.get(style, template_map['dropdown'])
     
-    return {
+    # Prepare context
+    template_context = {
         'languages': languages,
         'current_language': current_language,
         'current_language_name': dict(settings.LANGUAGES).get(current_language, ''),
@@ -118,3 +118,6 @@ def language_selector(context, style='dropdown', next_url=None):
         'next_url': next_url,
         'LANGUAGE_CODE': current_language,  # For compatibility
     }
+    
+    # Render and return the template
+    return render_to_string(template_name, template_context, request=context.get('request'))
