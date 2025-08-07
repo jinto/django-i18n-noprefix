@@ -52,7 +52,7 @@ touch django_i18n_noprefix/__init__.py
 - 빌드 시스템: hatchling
 - 완료: 2025-08-07 19:45
 
-⬜ **TASK-005**: 개발 환경 설정 스크립트
+✅ **TASK-005**: 개발 환경 설정 스크립트
 ```bash
 # scripts/setup-dev.sh
 python -m venv venv
@@ -60,6 +60,9 @@ source venv/bin/activate
 pip install -e ".[dev]"
 pre-commit install
 ```
+- Makefile 포함
+- 개발 문서 작성
+- 완료: 2025-08-08 00:15
 
 ⬜ **TASK-006**: Pre-commit 설정
 ```yaml
@@ -392,7 +395,7 @@ twine upload dist/*
 
 ### 전체 진행률
 ```
-Phase 0: [✅✅✅✅⬜⬜] 67% (4/6)
+Phase 0: [✅✅✅✅✅⬜] 83% (5/6)
 Phase 1: [✅✅✅✅✅✅✅✅✅✅✅✅] 100% (12/12)
 Phase 2: [✅✅✅✅✅⬜⬜⬜⬜⬜] 50% (5/10)
 Phase 3: [✅✅⬜⬜⬜⬜] 33% (2/6)
@@ -400,7 +403,7 @@ Phase 4: [⬜⬜⬜⬜⬜] 0% (0/5)
 Phase 5: [⬜⬜⬜⬜⬜⬜] 0% (0/6)
 Phase 6: [⬜⬜⬜⬜] 0% (0/4)
 
-전체: 23/49 작업 완료 (47%)
+전체: 24/49 작업 완료 (49%)
 ```
 
 ### 우선순위별 분류
