@@ -110,28 +110,32 @@ def save_language(self, request, response, original_lang):
 - 유효하지 않은 언어 코드 처리
 
 ### 1.2 유틸리티 함수
-⬜ **TASK-105**: utils.py 작성
+✅ **TASK-105**: utils.py 작성
 - 참고: pickspage/main/utils.py
 - `activate_language(request, lang_code)`
 - `get_supported_languages()`
 - `get_language_choices()`
+- 완료: 2025-08-07 20:15
 
-⬜ **TASK-106**: 언어 코드 검증 함수
+✅ **TASK-106**: 언어 코드 검증 함수
 ```python
 def is_valid_language(lang_code):
     """언어 코드가 LANGUAGES 설정에 있는지 확인"""
 ```
+- 완료: 2025-08-07 20:15 (TASK-105와 함께 구현)
 
 ### 1.3 언어 변경 시스템
-⬜ **TASK-107**: 언어 변경 뷰 구현
+✅ **TASK-107**: 언어 변경 뷰 구현
 - 파일: `django_i18n_noprefix/views.py`
 - `change_language(request, lang_code)` - GET/POST 지원
 - `set_language_ajax(request)` - AJAX 전용
+- 완료: 2025-08-07 20:18
 
-⬜ **TASK-108**: URL 패턴 정의
+✅ **TASK-108**: URL 패턴 정의
 - 파일: `django_i18n_noprefix/urls.py`
 - `/i18n/set-language/<lang_code>/`
 - `/i18n/set-language-ajax/`
+- 완료: 2025-08-07 20:18 (TASK-107과 함께 구현)
 
 ### 1.4 템플릿 태그
 ⬜ **TASK-109**: 템플릿 태그 라이브러리 생성
@@ -184,16 +188,18 @@ MIDDLEWARE = ['django_i18n_noprefix.middleware.NoPrefixLocaleMiddleware']
 - 언어 저장 로직
 - 완료: 2025-08-07 19:52 (TASK-101과 함께 작성)
 
-⬜ **TASK-204**: 유틸리티 함수 테스트
+✅ **TASK-204**: 유틸리티 함수 테스트
 - 파일: `tests/test_utils.py`
 - 언어 활성화
 - 언어 검증
+- 완료: 2025-08-07 20:16 (TASK-105와 함께 작성)
 
-⬜ **TASK-205**: 뷰 테스트
+✅ **TASK-205**: 뷰 테스트
 - 파일: `tests/test_views.py`
 - 언어 변경 뷰
 - AJAX 뷰
 - 리다이렉션
+- 완료: 2025-08-07 20:19 (TASK-107과 함께 작성)
 
 ### 2.3 통합 테스트
 ⬜ **TASK-206**: Django 통합 테스트
@@ -373,14 +379,14 @@ twine upload dist/*
 ### 전체 진행률
 ```
 Phase 0: [✅✅✅✅⬜⬜] 67% (4/6)
-Phase 1: [✅✅✅⬜⬜⬜⬜⬜⬜⬜⬜⬜] 25% (3/12)
-Phase 2: [✅✅⬜⬜⬜⬜⬜⬜⬜⬜] 20% (2/10)
+Phase 1: [✅✅✅✅✅✅✅⬜⬜⬜⬜⬜] 58% (7/12)
+Phase 2: [✅✅✅✅⬜⬜⬜⬜⬜⬜] 40% (4/10)
 Phase 3: [⬜⬜⬜⬜⬜⬜] 0% (0/6)
 Phase 4: [⬜⬜⬜⬜⬜] 0% (0/5)
 Phase 5: [⬜⬜⬜⬜⬜⬜] 0% (0/6)
 Phase 6: [⬜⬜⬜⬜] 0% (0/4)
 
-전체: 9/49 작업 완료 (18%)
+전체: 15/49 작업 완료 (31%)
 ```
 
 ### 우선순위별 분류
