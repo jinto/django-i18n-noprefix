@@ -104,10 +104,11 @@ def save_language(self, request, response, original_lang):
 ```
 - 완료: 2025-08-07 19:52 (TASK-101과 함께 구현)
 
-⬜ **TASK-104**: Accept-Language 헤더 파싱 개선
+✅ **TASK-104**: Accept-Language 헤더 파싱 개선
 - Django의 `get_language_from_request` 활용
 - 복잡한 헤더 처리 (q-value 포함)
 - 유효하지 않은 언어 코드 처리
+- 완료: 2025-08-07 21:00 (미들웨어에서 이미 Django API 사용 중)
 
 ### 1.2 유틸리티 함수
 ✅ **TASK-105**: utils.py 작성
@@ -138,10 +139,11 @@ def is_valid_language(lang_code):
 - 완료: 2025-08-07 20:18 (TASK-107과 함께 구현)
 
 ### 1.4 템플릿 태그
-⬜ **TASK-109**: 템플릿 태그 라이브러리 생성
+✅ **TASK-109**: 템플릿 태그 라이브러리 생성
 - 파일: `django_i18n_noprefix/templatetags/i18n_noprefix.py`
-- `{% get_current_language %}`
-- `{% get_available_languages %}`
+- `{% switch_language_url %}` - 언어 전환 URL 생성
+- `{% is_current_language %}` - 현재 언어 체크 필터
+- 완료: 2025-08-07 21:10 (Django i18n 태그와 중복 제거)
 
 ⬜ **TASK-110**: 언어 선택기 템플릿 태그
 ```python
@@ -175,12 +177,13 @@ class I18nNoPrefixConfig(AppConfig):
 - 픽스처 정의
 - 완료: 2025-08-07 19:48
 
-⬜ **TASK-202**: 테스트용 Django 프로젝트 설정
+✅ **TASK-202**: 테스트용 Django 프로젝트 설정
 ```python
 # tests/test_project/settings.py
 INSTALLED_APPS = ['django_i18n_noprefix']
 MIDDLEWARE = ['django_i18n_noprefix.middleware.NoPrefixLocaleMiddleware']
 ```
+- 완료: 2025-08-07 19:48 (TASK-201과 함께 구현)
 
 ### 2.2 단위 테스트
 ✅ **TASK-203**: 미들웨어 테스트
@@ -381,14 +384,14 @@ twine upload dist/*
 ### 전체 진행률
 ```
 Phase 0: [✅✅✅✅⬜⬜] 67% (4/6)
-Phase 1: [✅✅✅✅✅✅✅✅⬜⬜⬜⬜] 67% (8/12)
-Phase 2: [✅✅✅✅⬜⬜⬜⬜⬜⬜] 40% (4/10)
+Phase 1: [✅✅✅✅✅✅✅✅✅✅⬜⬜] 83% (10/12)
+Phase 2: [✅✅✅✅✅⬜⬜⬜⬜⬜] 50% (5/10)
 Phase 3: [⬜⬜⬜⬜⬜⬜] 0% (0/6)
 Phase 4: [⬜⬜⬜⬜⬜] 0% (0/5)
 Phase 5: [⬜⬜⬜⬜⬜⬜] 0% (0/6)
 Phase 6: [⬜⬜⬜⬜] 0% (0/4)
 
-전체: 16/49 작업 완료 (33%)
+전체: 19/49 작업 완료 (39%)
 ```
 
 ### 우선순위별 분류
@@ -442,6 +445,7 @@ Phase 6: [⬜⬜⬜⬜] 0% (0/4)
 2. **유연성**: 언어 감지 순서를 설정으로 변경 가능하게
 3. **호환성**: Django의 기존 i18n 기능과 충돌하지 않도록 주의
 4. **테스트**: 각 기능마다 테스트 먼저 작성 (TDD)
+5. **Django i18n 활용**: Django의 기본 i18n 기능을 최대한 활용하고 중복 제거
 
 ### 완료 기준
 - ✅ 코드 작성 완료

@@ -138,4 +138,7 @@ class TestVersionInfo:
         assert hasattr(django_i18n_noprefix, 'NoPrefixLocaleMiddleware')
         assert hasattr(django_i18n_noprefix, 'activate_language')
         assert hasattr(django_i18n_noprefix, 'is_valid_language')
-        assert hasattr(django_i18n_noprefix, 'get_supported_languages')
+        
+        # Check that we're not exporting unnecessary functions
+        assert not hasattr(django_i18n_noprefix, 'get_supported_languages')
+        assert not hasattr(django_i18n_noprefix, 'get_current_language')

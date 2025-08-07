@@ -1,0 +1,120 @@
+"""
+Template tags for django-i18n-noprefix.
+
+These tags complement Django's built-in i18n template tags.
+Use Django's tags for most i18n operations:
+- {% get_current_language %} for current language code
+- {% get_available_languages %} for available languages
+- {% get_language_info %} for language details
+
+Our tags focus on language switching functionality.
+"""
+from django import template
+from django.urls import reverse
+from django.utils import translation
+from django.utils.http import urlencode
+
+from ..utils import is_valid_language
+
+register = template.Library()
+
+
+@register.simple_tag
+def switch_language_url(lang_code, next_url=None):
+    """
+    Generate URL for switching to a specific language.
+    
+    Args:
+        lang_code: The language code to switch to
+        next_url: Optional URL to redirect to after switching (default: current page)
+    
+    Returns:
+        URL string for language switching
+    
+    Example:
+        {% switch_language_url 'ko' %}
+        {% switch_language_url 'en' next_url='/about/' %}
+    """
+    if not is_valid_language(lang_code):
+        return '#'  # Return anchor for invalid language
+    
+    base_url = reverse('django_i18n_noprefix:change_language', args=[lang_code])
+    
+    if next_url:
+        params = urlencode({'next': next_url})
+        return f'{base_url}?{params}'
+    
+    return base_url
+
+
+@register.filter
+def is_current_language(lang_code):
+    """
+    Check if the given language code is the current active language.
+    
+    Useful for adding CSS classes to active language links.
+    
+    Args:
+        lang_code: The language code to check
+    
+    Returns:
+        True if lang_code matches current language, False otherwise
+    
+    Example:
+        <li class="{% if 'ko'|is_current_language %}active{% endif %}">
+    """
+    return lang_code == translation.get_language()
+
+
+@register.inclusion_tag('i18n_noprefix/language_selector.html', takes_context=True)
+def language_selector(context, style='dropdown', next_url=None):
+    """
+    Render a language selector widget.
+    
+    Args:
+        context: Template context (automatic)
+        style: Widget style - 'dropdown', 'list', or 'inline' (default: 'dropdown')
+        next_url: URL to redirect to after language change (default: current page)
+    
+    Returns:
+        Rendered language selector HTML
+    
+    Example:
+        {% language_selector %}
+        {% language_selector style='list' %}
+        {% language_selector style='inline' next_url='/dashboard/' %}
+    """
+    from django.conf import settings
+    
+    current_language = translation.get_language()
+    
+    # Get language info for all available languages
+    languages = []
+    for code, name in settings.LANGUAGES:
+        languages.append({
+            'code': code,
+            'name': name,
+            'is_current': code == current_language,
+            'switch_url': switch_language_url(code, next_url),
+        })
+    
+    # Get template based on style
+    template_map = {
+        'dropdown': 'i18n_noprefix/language_selector.html',
+        'list': 'i18n_noprefix/language_selector_list.html',
+        'inline': 'i18n_noprefix/language_selector_inline.html',
+    }
+    
+    # Update template name if different style is requested
+    if style in template_map and style != 'dropdown':
+        # This will be handled by the template selection
+        pass
+    
+    return {
+        'languages': languages,
+        'current_language': current_language,
+        'current_language_name': dict(settings.LANGUAGES).get(current_language, ''),
+        'style': style,
+        'next_url': next_url,
+        'LANGUAGE_CODE': current_language,  # For compatibility
+    }
