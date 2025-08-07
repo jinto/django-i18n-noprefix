@@ -81,7 +81,7 @@ pre-commit install
 - 메서드: `__init__`, `__call__`
 - 완료: 2025-08-07 19:52
 
-⬜ **TASK-102**: 언어 감지 로직 구현
+✅ **TASK-102**: 언어 감지 로직 구현
 ```python
 def get_language(self, request):
     """
@@ -92,8 +92,9 @@ def get_language(self, request):
     4. 기본 언어 (LANGUAGE_CODE)
     """
 ```
+- 완료: 2025-08-07 19:52 (TASK-101과 함께 구현)
 
-⬜ **TASK-103**: 언어 저장 로직 구현
+✅ **TASK-103**: 언어 저장 로직 구현
 ```python
 def save_language(self, request, response, original_lang):
     """
@@ -101,6 +102,7 @@ def save_language(self, request, response, original_lang):
     - 쿠키에 저장 (항상)
     """
 ```
+- 완료: 2025-08-07 19:52 (TASK-101과 함께 구현)
 
 ⬜ **TASK-104**: Accept-Language 헤더 파싱 개선
 - Django의 `get_language_from_request` 활용
@@ -175,11 +177,12 @@ MIDDLEWARE = ['django_i18n_noprefix.middleware.NoPrefixLocaleMiddleware']
 ```
 
 ### 2.2 단위 테스트
-⬜ **TASK-203**: 미들웨어 테스트
+✅ **TASK-203**: 미들웨어 테스트
 - 파일: `tests/test_middleware.py`
 - URL prefix 없음 확인
 - 언어 감지 우선순위
 - 언어 저장 로직
+- 완료: 2025-08-07 19:52 (TASK-101과 함께 작성)
 
 ⬜ **TASK-204**: 유틸리티 함수 테스트
 - 파일: `tests/test_utils.py`
@@ -370,14 +373,14 @@ twine upload dist/*
 ### 전체 진행률
 ```
 Phase 0: [✅✅✅✅⬜⬜] 67% (4/6)
-Phase 1: [✅⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜] 8% (1/12)
-Phase 2: [✅⬜⬜⬜⬜⬜⬜⬜⬜⬜] 10% (1/10)
+Phase 1: [✅✅✅⬜⬜⬜⬜⬜⬜⬜⬜⬜] 25% (3/12)
+Phase 2: [✅✅⬜⬜⬜⬜⬜⬜⬜⬜] 20% (2/10)
 Phase 3: [⬜⬜⬜⬜⬜⬜] 0% (0/6)
 Phase 4: [⬜⬜⬜⬜⬜] 0% (0/5)
 Phase 5: [⬜⬜⬜⬜⬜⬜] 0% (0/6)
 Phase 6: [⬜⬜⬜⬜] 0% (0/4)
 
-전체: 6/49 작업 완료 (12%)
+전체: 9/49 작업 완료 (18%)
 ```
 
 ### 우선순위별 분류
