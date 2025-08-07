@@ -151,12 +151,14 @@ def language_selector():
 ```
 
 ### 1.5 Django 앱 설정
-⬜ **TASK-111**: apps.py 작성
+✅ **TASK-111**: apps.py 작성
 ```python
 class I18nNoPrefixConfig(AppConfig):
     name = 'django_i18n_noprefix'
     verbose_name = 'Django i18n No-Prefix'
 ```
+- 시스템 체크 추가 (미들웨어, 언어 설정, URL 검증)
+- 완료: 2025-08-07 20:35
 
 ⬜ **TASK-112**: 기본 템플릿 제공
 - `templates/i18n_noprefix/language_selector.html`
@@ -379,14 +381,14 @@ twine upload dist/*
 ### 전체 진행률
 ```
 Phase 0: [✅✅✅✅⬜⬜] 67% (4/6)
-Phase 1: [✅✅✅✅✅✅✅⬜⬜⬜⬜⬜] 58% (7/12)
+Phase 1: [✅✅✅✅✅✅✅✅⬜⬜⬜⬜] 67% (8/12)
 Phase 2: [✅✅✅✅⬜⬜⬜⬜⬜⬜] 40% (4/10)
 Phase 3: [⬜⬜⬜⬜⬜⬜] 0% (0/6)
 Phase 4: [⬜⬜⬜⬜⬜] 0% (0/5)
 Phase 5: [⬜⬜⬜⬜⬜⬜] 0% (0/6)
 Phase 6: [⬜⬜⬜⬜] 0% (0/4)
 
-전체: 15/49 작업 완료 (31%)
+전체: 16/49 작업 완료 (33%)
 ```
 
 ### 우선순위별 분류
