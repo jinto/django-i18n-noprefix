@@ -1,6 +1,7 @@
 """
 Pytest configuration for django-i18n-noprefix tests.
 """
+
 import os
 import sys
 from pathlib import Path
@@ -34,6 +35,7 @@ def enable_db_access_for_all_tests(db):
 def client():
     """Django test client fixture."""
     from django.test import Client
+
     return Client()
 
 
@@ -41,6 +43,7 @@ def client():
 def rf():
     """Django RequestFactory fixture."""
     from django.test import RequestFactory
+
     return RequestFactory()
 
 
@@ -48,12 +51,10 @@ def rf():
 def user(db):
     """Create a test user."""
     from django.contrib.auth import get_user_model
-    
+
     User = get_user_model()
     return User.objects.create_user(
-        username='testuser',
-        email='test@example.com',
-        password='testpass123'
+        username="testuser", email="test@example.com", password="testpass123"
     )
 
 
@@ -61,12 +62,10 @@ def user(db):
 def admin_user(db):
     """Create a test admin user."""
     from django.contrib.auth import get_user_model
-    
+
     User = get_user_model()
     return User.objects.create_superuser(
-        username='admin',
-        email='admin@example.com',
-        password='adminpass123'
+        username="admin", email="admin@example.com", password="adminpass123"
     )
 
 
@@ -74,56 +73,58 @@ def admin_user(db):
 def languages_settings():
     """Common language settings for tests."""
     return [
-        ('ko', 'Korean'),
-        ('en', 'English'),
-        ('ja', 'Japanese'),
+        ("ko", "Korean"),
+        ("en", "English"),
+        ("ja", "Japanese"),
     ]
 
 
 @pytest.fixture
 def mock_request(rf):
     """Create a mock request with common attributes."""
-    def _make_request(path='/', method='GET', **kwargs):
+
+    def _make_request(path="/", method="GET", **kwargs):
         request_method = getattr(rf, method.lower())
         request = request_method(path, **kwargs)
-        
+
         # Add session-like dictionary
         request.session = {}
-        
+
         # Add COOKIES
         request.COOKIES = {}
-        
+
         # Add META headers
-        if 'headers' in kwargs:
-            for key, value in kwargs['headers'].items():
+        if "headers" in kwargs:
+            for key, value in kwargs["headers"].items():
                 request.META[f'HTTP_{key.upper().replace("-", "_")}'] = value
-        
+
         return request
-    
+
     return _make_request
 
 
 @pytest.fixture
 def mock_response():
     """Create a mock response object."""
+
     class MockResponse:
         def __init__(self):
             self.cookies = {}
             self.status_code = 200
-            self.content = b''
+            self.content = b""
             self._headers = {}
-        
+
         def set_cookie(self, key, value, **kwargs):
             self.cookies[key] = value
-        
+
         def delete_cookie(self, key):
             if key in self.cookies:
                 del self.cookies[key]
-        
+
         def __setitem__(self, key, value):
             self._headers[key] = value
-        
+
         def __getitem__(self, key):
             return self._headers.get(key)
-    
+
     return MockResponse()

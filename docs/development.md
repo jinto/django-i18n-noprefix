@@ -83,11 +83,49 @@ make coverage
 
 ## Code Quality
 
+We use pre-commit hooks to ensure code quality. They run automatically on `git commit`.
+
+### Pre-commit Setup
+
+```bash
+# Install pre-commit hooks (done automatically by setup-dev.sh)
+make pre-commit-install
+
+# Run pre-commit on all files manually
+make pre-commit
+
+# Update hooks to latest versions
+make pre-commit-update
+```
+
+### Automatic Checks
+
+Pre-commit hooks automatically:
+- Format code with Black
+- Fix imports and lint with Ruff
+- Remove trailing whitespace
+- Ensure files end with a newline
+- Check YAML/JSON/TOML syntax
+- Detect merge conflicts
+- Prevent large files (>500KB)
+
+To skip hooks in emergency:
+```bash
+git commit --no-verify -m "emergency fix"
+```
+
+### Manual Checks
+
 Before committing:
 1. Format your code: `make format`
 2. Check linting: `make lint`
 3. Run tests: `make test`
 4. Check types: `make typecheck`
+
+Or run all quality checks at once:
+```bash
+make quality
+```
 
 ## Troubleshooting
 

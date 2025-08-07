@@ -9,6 +9,7 @@ Use Django's tags for most i18n operations:
 
 Our tags focus on language switching functionality.
 """
+
 from django import template
 from django.urls import reverse
 from django.utils import translation
@@ -23,27 +24,27 @@ register = template.Library()
 def switch_language_url(lang_code, next_url=None):
     """
     Generate URL for switching to a specific language.
-    
+
     Args:
         lang_code: The language code to switch to
         next_url: Optional URL to redirect to after switching (default: current page)
-    
+
     Returns:
         URL string for language switching
-    
+
     Example:
         {% switch_language_url 'ko' %}
         {% switch_language_url 'en' next_url='/about/' %}
     """
     if not is_valid_language(lang_code):
-        return '#'  # Return anchor for invalid language
-    
-    base_url = reverse('django_i18n_noprefix:change_language', args=[lang_code])
-    
+        return "#"  # Return anchor for invalid language
+
+    base_url = reverse("django_i18n_noprefix:change_language", args=[lang_code])
+
     if next_url:
-        params = urlencode({'next': next_url})
-        return f'{base_url}?{params}'
-    
+        params = urlencode({"next": next_url})
+        return f"{base_url}?{params}"
+
     return base_url
 
 
@@ -51,15 +52,15 @@ def switch_language_url(lang_code, next_url=None):
 def is_current_language(lang_code):
     """
     Check if the given language code is the current active language.
-    
+
     Useful for adding CSS classes to active language links.
-    
+
     Args:
         lang_code: The language code to check
-    
+
     Returns:
         True if lang_code matches current language, False otherwise
-    
+
     Example:
         <li class="{% if 'ko'|is_current_language %}active{% endif %}">
     """
@@ -67,18 +68,18 @@ def is_current_language(lang_code):
 
 
 @register.simple_tag(takes_context=True)
-def language_selector(context, style='dropdown', next_url=None):
+def language_selector(context, style="dropdown", next_url=None):
     """
     Render a language selector widget.
-    
+
     Args:
         context: Template context (automatic)
         style: Widget style - 'dropdown', 'list', or 'inline' (default: 'dropdown')
         next_url: URL to redirect to after language change (default: current page)
-    
+
     Returns:
         Rendered language selector HTML
-    
+
     Example:
         {% language_selector %}
         {% language_selector style='list' %}
@@ -86,38 +87,42 @@ def language_selector(context, style='dropdown', next_url=None):
     """
     from django.conf import settings
     from django.template.loader import render_to_string
-    
+
     current_language = translation.get_language()
-    
+
     # Get language info for all available languages
     languages = []
     for code, name in settings.LANGUAGES:
-        languages.append({
-            'code': code,
-            'name': name,
-            'is_current': code == current_language,
-            'switch_url': switch_language_url(code, next_url),
-        })
-    
+        languages.append(
+            {
+                "code": code,
+                "name": name,
+                "is_current": code == current_language,
+                "switch_url": switch_language_url(code, next_url),
+            }
+        )
+
     # Get template based on style
     template_map = {
-        'dropdown': 'i18n_noprefix/language_selector.html',
-        'list': 'i18n_noprefix/language_selector_list.html',
-        'inline': 'i18n_noprefix/language_selector_inline.html',
+        "dropdown": "i18n_noprefix/language_selector.html",
+        "list": "i18n_noprefix/language_selector_list.html",
+        "inline": "i18n_noprefix/language_selector_inline.html",
     }
-    
+
     # Select the appropriate template
-    template_name = template_map.get(style, template_map['dropdown'])
-    
+    template_name = template_map.get(style, template_map["dropdown"])
+
     # Prepare context
     template_context = {
-        'languages': languages,
-        'current_language': current_language,
-        'current_language_name': dict(settings.LANGUAGES).get(current_language, ''),
-        'style': style,
-        'next_url': next_url,
-        'LANGUAGE_CODE': current_language,  # For compatibility
+        "languages": languages,
+        "current_language": current_language,
+        "current_language_name": dict(settings.LANGUAGES).get(current_language, ""),
+        "style": style,
+        "next_url": next_url,
+        "LANGUAGE_CODE": current_language,  # For compatibility
     }
-    
+
     # Render and return the template
-    return render_to_string(template_name, template_context, request=context.get('request'))
+    return render_to_string(
+        template_name, template_context, request=context.get("request")
+    )

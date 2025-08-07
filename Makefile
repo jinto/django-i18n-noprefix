@@ -73,3 +73,23 @@ publish-test:  ## Publish to TestPyPI
 .PHONY: publish
 publish:  ## Publish to PyPI
 	twine upload dist/*
+
+.PHONY: pre-commit
+pre-commit:  ## Run pre-commit on all files
+	pre-commit run --all-files
+
+.PHONY: pre-commit-install
+pre-commit-install:  ## Install pre-commit hooks
+	pre-commit install
+	@echo "Pre-commit hooks installed! They will run automatically on git commit."
+
+.PHONY: pre-commit-update
+pre-commit-update:  ## Update pre-commit hooks to latest versions
+	pre-commit autoupdate
+
+.PHONY: quality
+quality:  ## Run all quality checks (lint, typecheck, pre-commit)
+	@echo "Running code quality checks..."
+	@make lint
+	@make typecheck
+	@make pre-commit

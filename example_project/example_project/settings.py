@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -122,16 +122,16 @@ USE_L10N = True
 USE_TZ = True
 
 # Language configuration
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _  # noqa: E402
 
 LANGUAGES = [
-    ('en', _('English')),
-    ('ko', _('Korean')),
-    ('ja', _('Japanese')),
+    ("en", _("English")),
+    ("ko", _("Korean")),
+    ("ja", _("Japanese")),
 ]
 
 LOCALE_PATHS = [
-    BASE_DIR / 'locale',
+    BASE_DIR / "locale",
 ]
 
 

@@ -7,6 +7,7 @@ Most i18n functionality should use Django's built-in functions directly:
 - Use `settings.LANGUAGES` directly for available languages
 - Use `translation.get_language_info()` for language names
 """
+
 from django.conf import settings
 from django.http import HttpRequest
 from django.utils import translation
@@ -15,18 +16,18 @@ from django.utils import translation
 def activate_language(request: HttpRequest, lang_code: str) -> bool:
     """
     Activate a language for the current request.
-    
+
     This is a convenience function to use in views when you need to
     change the language programmatically. It combines Django's
     translation.activate() with request attribute setting.
-    
+
     Args:
         request: The HTTP request object
         lang_code: The language code to activate
-    
+
     Returns:
         True if the language was activated, False if invalid
-    
+
     Example:
         >>> activate_language(request, 'ko')
         True
@@ -41,13 +42,13 @@ def activate_language(request: HttpRequest, lang_code: str) -> bool:
 def is_valid_language(lang_code: str) -> bool:
     """
     Check if a language code is valid (exists in LANGUAGES setting).
-    
+
     Args:
         lang_code: The language code to validate
-    
+
     Returns:
         True if the language code is valid, False otherwise
-    
+
     Example:
         >>> is_valid_language('ko')
         True

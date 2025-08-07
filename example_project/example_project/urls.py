@@ -16,12 +16,12 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     # Language switching URLs from our package
-    path('i18n/', include('django_i18n_noprefix.urls')),
+    path("i18n/", include("django_i18n_noprefix.urls")),
     # Demo app URLs
-    path('', include('demo.urls')),
+    path("", include("demo.urls")),
 ]

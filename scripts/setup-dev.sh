@@ -184,11 +184,32 @@ print_step "Setting up pre-commit hooks..."
 
 if [ -f ".pre-commit-config.yaml" ]; then
     print_info "Installing pre-commit hooks..."
+
+    # Check if pre-commit is installed
+    if ! command -v pre-commit &> /dev/null; then
+        print_info "Installing pre-commit..."
+        if [ "$USE_UV" = true ]; then
+            uv pip install pre-commit
+        else
+            pip install pre-commit
+        fi
+    fi
+
+    # Install the git hooks
     pre-commit install
     print_success "Pre-commit hooks installed"
+
+    # Run on all files to check current status
+    print_info "Checking code with pre-commit..."
+    if pre-commit run --all-files; then
+        print_success "All pre-commit checks passed!"
+    else
+        print_warning "Some pre-commit checks failed. Run 'make pre-commit' to see details."
+        print_info "Many issues can be auto-fixed by running the hooks again."
+    fi
 else
     print_warning "No .pre-commit-config.yaml found, skipping pre-commit setup"
-    print_info "You can create one later with 'pre-commit sample-config > .pre-commit-config.yaml'"
+    print_info "Run 'make pre-commit-install' to set up pre-commit hooks later"
 fi
 
 # Step 9: Run initial tests

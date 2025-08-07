@@ -1,0 +1,100 @@
+# Pre-commit hooks for django-i18n-noprefix
+# See https://pre-commit.com for more information
+
+default_language_version:
+  python: python3
+
+default_stages: [pre-commit]
+
+repos:
+  # Python code formatting
+  - repo: https://github.com/psf/black
+    rev: 24.3.0
+    hooks:
+      - id: black
+        language_version: python3
+        args: ["--config", "pyproject.toml"]
+        stages: [pre-commit]
+
+  # Python linting and import sorting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.2
+    hooks:
+      - id: ruff
+        args: ["--fix", "--exit-non-zero-on-fix"]
+        stages: [pre-commit]
+      - id: ruff-format
+        stages: [pre-commit]
+
+  # Python type checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.9.0
+    hooks:
+      - id: mypy
+        additional_dependencies: [django-stubs>=4.2.0, types-all]
+        args: ["--config-file", "pyproject.toml"]
+        stages: [manual]  # Run manually due to performance
+        files: ^django_i18n_noprefix/
+        exclude: ^(tests/|example_project/)
+
+  # General file fixes
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      # File formatting
+      - id: trailing-whitespace
+        stages: [pre-commit]
+      - id: end-of-file-fixer
+        stages: [pre-commit]
+      - id: fix-byte-order-marker
+        stages: [pre-commit]
+
+      # File content checks
+      - id: check-yaml
+        stages: [pre-commit]
+      - id: check-json
+        stages: [pre-commit]
+      - id: check-toml
+        stages: [pre-commit]
+      - id: check-xml
+        stages: [pre-commit]
+
+      # Python specific
+      - id: check-ast
+        stages: [pre-commit]
+      - id: check-docstring-first
+        stages: [pre-commit]
+      - id: debug-statements
+        stages: [pre-commit]
+      - id: fix-encoding-pragma
+        args: ["--remove"]
+        stages: [pre-commit]
+
+      # Git checks
+      - id: check-merge-conflict
+        stages: [pre-commit]
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+        stages: [pre-commit]
+
+      # Security
+      - id: detect-private-key
+        stages: [pre-commit]
+
+  # Django specific (optional, run manually)
+  - repo: https://github.com/adamchainz/django-upgrade
+    rev: 1.16.0
+    hooks:
+      - id: django-upgrade
+        args: ["--target-version", "4.2"]
+        stages: [manual]
+        files: \.py$
+        exclude: migrations/
+
+# Configuration for specific environments
+ci:
+  autofix_prs: true
+  autofix_commit_msg: "[pre-commit.ci] auto fixes"
+  autoupdate_schedule: weekly
+  autoupdate_commit_msg: "[pre-commit.ci] pre-commit autoupdate"
+  skip: [mypy]  # Skip mypy in CI due to performance
