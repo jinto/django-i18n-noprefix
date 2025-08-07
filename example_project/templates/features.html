@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load i18n_noprefix %}
+
+{% block content %}
+<h1 class="mb-4">{{ page_title }}</h1>
+
+<div class="demo-section">
+    <h2>{% trans "Text Translation Demo" %}</h2>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <h5>{% trans "Short Text" %}</h5>
+            <p class="border p-3">{{ demo_text.short }}</p>
+        </div>
+        <div class="col-md-4">
+            <h5>{% trans "Medium Text" %}</h5>
+            <p class="border p-3">{{ demo_text.medium }}</p>
+        </div>
+        <div class="col-md-4">
+            <h5>{% trans "Long Text" %}</h5>
+            <p class="border p-3">{{ demo_text.long }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="demo-section">
+    <h2>{% trans "List Translation Demo" %}</h2>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h5>{% trans "Ordered List" %}</h5>
+            <ol>
+                {% for item in demo_items %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ol>
+        </div>
+        <div class="col-md-6">
+            <h5>{% trans "Unordered List" %}</h5>
+            <ul>
+                {% for item in demo_items %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="demo-section">
+    <h2>{% trans "Language Selector Styles" %}</h2>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <h5>{% trans "Dropdown Style" %}</h5>
+            {% language_selector style='dropdown' %}
+            <p class="text-muted mt-2">
+                {% trans "Best for navigation bars and compact spaces." %}
+            </p>
+        </div>
+        
+        <div class="col-md-4">
+            <h5>{% trans "List Style" %}</h5>
+            {% language_selector style='list' %}
+            <p class="text-muted mt-2">
+                {% trans "Ideal for settings pages and sidebars." %}
+            </p>
+        </div>
+        
+        <div class="col-md-4">
+            <h5>{% trans "Inline Style" %}</h5>
+            {% language_selector style='inline' %}
+            <p class="text-muted mt-2">
+                {% trans "Perfect for footers and horizontal layouts." %}
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="demo-section">
+    <h2>{% trans "Date and Time Formatting" %}</h2>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h5>{% trans "Current Date" %}</h5>
+            <p class="border p-3">
+                {% now "DATE_FORMAT" %}
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h5>{% trans "Current Time" %}</h5>
+            <p class="border p-3">
+                {% now "TIME_FORMAT" %}
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="demo-section">
+    <h2>{% trans "Number Formatting" %}</h2>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <h5>{% trans "Integer" %}</h5>
+            <p class="border p-3">
+                {% blocktrans with number=123456789 %}
+                {{ number }}
+                {% endblocktrans %}
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h5>{% trans "Decimal" %}</h5>
+            <p class="border p-3">
+                {% blocktrans with number=1234.56 %}
+                {{ number }}
+                {% endblocktrans %}
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h5>{% trans "Percentage" %}</h5>
+            <p class="border p-3">
+                {% blocktrans with percent="85.5%" %}
+                {{ percent }}
+                {% endblocktrans %}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

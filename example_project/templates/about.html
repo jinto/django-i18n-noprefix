@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<h1 class="mb-4">{{ page_title }}</h1>
+
+<div class="row">
+    <div class="col-lg-8">
+        <p class="lead">
+            {% trans "Django i18n No-Prefix is a package that enables Django's internationalization features without adding language prefixes to your URLs." %}
+        </p>
+        
+        <h2 class="mt-4">{% trans "Why Use This Package?" %}</h2>
+        <p>
+            {% blocktrans %}
+            Traditional Django i18n adds language codes to your URLs (like /en/about/ or /ko/about/). 
+            While this works well for many sites, sometimes you want cleaner URLs without these prefixes. 
+            This package provides that functionality while maintaining all of Django's i18n features.
+            {% endblocktrans %}
+        </p>
+        
+        <h2 class="mt-4">{% trans "Key Features" %}</h2>
+        <div class="row g-4">
+            {% for feature in features %}
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ feature.title }}</h5>
+                        <p class="card-text">{{ feature.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <h2 class="mt-4">{% trans "How It Works" %}</h2>
+        <ol>
+            <li>{% trans "The middleware detects the user's language preference from session, cookies, or Accept-Language header" %}</li>
+            <li>{% trans "Language is activated for the current request" %}</li>
+            <li>{% trans "All translations and i18n features work as normal" %}</li>
+            <li>{% trans "Language preference is saved to session and cookie for future visits" %}</li>
+        </ol>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Installation" %}</h5>
+                <pre><code>pip install django-i18n-noprefix</code></pre>
+                
+                <h5 class="card-title mt-3">{% trans "Quick Setup" %}</h5>
+                <ol class="small">
+                    <li>{% trans "Add to INSTALLED_APPS" %}</li>
+                    <li>{% trans "Replace LocaleMiddleware" %}</li>
+                    <li>{% trans "Include URLs" %}</li>
+                    <li>{% trans "Add template tags" %}</li>
+                </ol>
+                
+                <a href="https://github.com/jinto/django-i18n-noprefix" class="btn btn-primary mt-3 w-100">
+                    {% trans "View on GitHub" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% load i18n_noprefix %}
+
+{% block extra_css %}
+<link href="{% static 'i18n_noprefix/css/vanilla.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">{{ page_title }}</h1>
+
+<div class="alert alert-info">
+    <strong>{% trans "Active Style:" %}</strong> {{ style_name }}
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="demo-section">
+            <h2>{% trans "Vanilla CSS Language Selectors" %}</h2>
+            <p class="text-muted">
+                {% trans "Pure CSS implementation with no framework dependencies" %}
+            </p>
+            
+            <div class="row g-4 mt-3">
+                <div class="col-md-6">
+                    <h5>{% trans "Dropdown Style" %}</h5>
+                    {% language_selector style='dropdown' %}
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>{% trans "Custom Theme" %}</h5>
+                    <div style="--i18n-primary: #e91e63; --i18n-primary-hover: #d81b60;">
+                        {% language_selector style='dropdown' %}
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>{% trans "Inline Style" %}</h5>
+                    {% language_selector style='inline' %}
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>{% trans "Green Theme Inline" %}</h5>
+                    <div style="--i18n-primary: #10b981; --i18n-primary-hover: #059669;">
+                        {% language_selector style='inline' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h3>{% trans "List Style Variations" %}</h3>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>{% trans "Default List" %}</h5>
+                    {% language_selector style='list' %}
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>{% trans "Purple Theme List" %}</h5>
+                    <div style="--i18n-primary: #8b5cf6; --i18n-primary-hover: #7c3aed;">
+                        {% language_selector style='list' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section" style="background: #1f2937; color: #f3f4f6;" class="dark">
+            <h3>{% trans "Dark Mode Support" %}</h3>
+            <p style="color: #9ca3af;">
+                {% trans "All styles automatically adapt to dark mode" %}
+            </p>
+            
+            <div class="row g-4 mt-3">
+                <div class="col-md-4">
+                    {% language_selector style='dropdown' %}
+                </div>
+                <div class="col-md-4">
+                    {% language_selector style='inline' %}
+                </div>
+                <div class="col-md-4">
+                    {% language_selector style='list' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "CSS Variables" %}</h5>
+                <p class="text-muted small">
+                    {% trans "Customize colors using CSS custom properties:" %}
+                </p>
+                
+                <pre class="bg-light p-2"><code>:root {
+  --i18n-primary: #3b82f6;
+  --i18n-text: #1f2937;
+  --i18n-bg: #ffffff;
+  --i18n-border: #e5e7eb;
+  --i18n-radius: 0.375rem;
+}</code></pre>
+                
+                <h6 class="mt-3">{% trans "Features" %}</h6>
+                <ul class="small">
+                    <li>{% trans "Automatic dark mode" %}</li>
+                    <li>{% trans "RTL language support" %}</li>
+                    <li>{% trans "Mobile responsive" %}</li>
+                    <li>{% trans "Accessible (WCAG 2.1)" %}</li>
+                    <li>{% trans "Print styles included" %}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

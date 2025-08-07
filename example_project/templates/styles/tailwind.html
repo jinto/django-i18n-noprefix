@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% load i18n_noprefix %}
+
+{% block extra_css %}
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="{% static 'i18n_noprefix/css/tailwind.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">{{ page_title }}</h1>
+
+<div class="alert alert-info">
+    <strong>{% trans "Active Style:" %}</strong> {{ style_name }}
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="demo-section">
+            <h2 class="mb-4">{% trans "Tailwind CSS Language Selectors" %}</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <h5 class="text-lg font-semibold mb-2">{% trans "Select Dropdown" %}</h5>
+                    <select class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            <option {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
+                                {{ lang_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div>
+                    <h5 class="text-lg font-semibold mb-2">{% trans "Pill Buttons" %}</h5>
+                    <div class="flex space-x-2">
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            {% if lang_code == CURRENT_LANGUAGE %}
+                                <span class="px-3 py-1 text-sm font-medium text-white bg-indigo-600 rounded-md">
+                                    {{ lang_code|upper }}
+                                </span>
+                            {% else %}
+                                <a href="{% switch_language_url lang_code %}" 
+                                   class="px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                                    {{ lang_code|upper }}
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div>
+                    <h5 class="text-lg font-semibold mb-2">{% trans "Segmented Control" %}</h5>
+                    <div class="inline-flex rounded-lg shadow-sm">
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            {% if lang_code == CURRENT_LANGUAGE %}
+                                <span class="relative inline-flex items-center px-4 py-2 {% if forloop.first %}rounded-l-lg{% elif forloop.last %}rounded-r-lg{% endif %} border border-indigo-500 bg-indigo-500 text-sm font-medium text-white">
+                                    {{ lang_name }}
+                                </span>
+                            {% else %}
+                                <a href="{% switch_language_url lang_code %}" 
+                                   class="relative inline-flex items-center px-4 py-2 {% if forloop.first %}rounded-l-lg{% elif forloop.last %}rounded-r-lg -ml-px{% else %}-ml-px{% endif %} border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                    {{ lang_name }}
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div>
+                    <h5 class="text-lg font-semibold mb-2">{% trans "Badge Style" %}</h5>
+                    <div class="flex flex-wrap gap-2">
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            {% if lang_code == CURRENT_LANGUAGE %}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                                    {{ lang_name }}
+                                </span>
+                            {% else %}
+                                <a href="{% switch_language_url lang_code %}" 
+                                   class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 hover:bg-gray-200">
+                                    {{ lang_name }}
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h3 class="text-xl font-semibold mb-4">{% trans "List Style" %}</h3>
+            <div class="max-w-md">
+                <div class="border border-gray-200 rounded-lg divide-y divide-gray-200">
+                    {% for lang_code, lang_name in LANGUAGES %}
+                        {% if lang_code == CURRENT_LANGUAGE %}
+                            <div class="px-4 py-3 bg-indigo-50 border-l-4 border-indigo-500">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-indigo-700 font-medium">{{ lang_name }}</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                                        {% trans "Active" %}
+                                    </span>
+                                </div>
+                            </div>
+                        {% else %}
+                            <a href="{% switch_language_url lang_code %}" class="block px-4 py-3 hover:bg-gray-50 transition-colors">
+                                <span class="text-gray-700">{{ lang_name }}</span>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+            <div class="px-4 py-5 sm:p-6">
+                <h5 class="text-lg font-medium leading-6 text-gray-900 mb-4">
+                    {% trans "Settings Form" %}
+                </h5>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">
+                            {% trans "Email" %}
+                        </label>
+                        <input type="email" 
+                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                               placeholder="email@example.com">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">
+                            {% trans "Language" %}
+                        </label>
+                        <select class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            {% for lang_code, lang_name in LANGUAGES %}
+                                <option {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
+                                    {{ lang_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <button type="submit" 
+                            class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        {% trans "Save Settings" %}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -160,7 +160,10 @@ class NoPrefixLocaleMiddleware:
         # Only save if language changed
         if current_language != original_language:
             # Save to session if available
-            if hasattr(request, 'session') and request.session.session_key:
+            if hasattr(request, 'session') and hasattr(request.session, 'session_key') and request.session.session_key:
+                request.session['django_language'] = current_language
+            elif hasattr(request, 'session') and not hasattr(request.session, 'session_key'):
+                # For dict-like sessions (e.g., in tests)
                 request.session['django_language'] = current_language
             
             # Always save to cookie

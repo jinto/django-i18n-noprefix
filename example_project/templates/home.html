@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-4">{{ welcome_message }}</h1>
+    <p class="lead">{{ description }}</p>
+    
+    <div class="mt-4">
+        <a href="{% url 'demo:about' %}" class="btn btn-primary btn-lg me-2">
+            {% trans "Learn More" %}
+        </a>
+        <a href="{% url 'demo:features' %}" class="btn btn-outline-primary btn-lg">
+            {% trans "View Features" %}
+        </a>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "No URL Prefixes" %}</h5>
+                <p class="card-text">
+                    {% trans "Keep your URLs clean without language codes. No more /en/, /ko/, or /ja/ in your paths." %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Easy Integration" %}</h5>
+                <p class="card-text">
+                    {% trans "Simply replace Django's LocaleMiddleware with our NoPrefixLocaleMiddleware." %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Multiple Styles" %}</h5>
+                <p class="card-text">
+                    {% trans "Choose from dropdown, list, or inline language selectors with various CSS frameworks." %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="demo-section mt-5">
+    <h2 class="mb-4">{% trans "Quick Demo" %}</h2>
+    <p>{% trans "Try changing the language using the selector in the navigation bar or footer." %}</p>
+    
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h4>{% trans "Current Language" %}</h4>
+            {% get_current_language as CURRENT_LANGUAGE %}
+            {% get_current_language_info as lang_info %}
+            <p>
+                <strong>{% trans "Code" %}:</strong> {{ CURRENT_LANGUAGE }}<br>
+                <strong>{% trans "Name" %}:</strong> {{ lang_info.name_local }}<br>
+                <strong>{% trans "Direction" %}:</strong> {% if lang_info.bidi %}RTL{% else %}LTR{% endif %}
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h4>{% trans "Available Languages" %}</h4>
+            <ul>
+                {% get_available_languages as LANGUAGES %}
+                {% for lang_code, lang_name in LANGUAGES %}
+                    <li>
+                        {{ lang_name }} ({{ lang_code }})
+                        {% if lang_code == CURRENT_LANGUAGE %}
+                            <span class="badge bg-primary">{% trans "Active" %}</span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load i18n_noprefix %}
+
+{% block content %}
+<h1 class="mb-4">{{ page_title }}</h1>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">{{ language_section.title }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">{{ language_section.description }}</p>
+                
+                <div class="mb-4">
+                    <h6>{{ language_section.current_language }}</h6>
+                    {% get_current_language as CURRENT_LANGUAGE %}
+                    {% get_current_language_info as lang_info %}
+                    <div class="alert alert-info">
+                        <strong>{{ lang_info.name_local }}</strong> ({{ CURRENT_LANGUAGE }})
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <h6>{{ language_section.change_language }}</h6>
+                    <p class="text-muted">
+                        {% trans "Select your preferred language from the list below:" %}
+                    </p>
+                    
+                    <!-- List style selector for settings page -->
+                    {% language_selector style='list' %}
+                </div>
+                
+                <hr>
+                
+                <h5 class="mt-4">{% trans "Language Detection Priority" %}</h5>
+                <ol>
+                    <li>{% trans "Session storage (if logged in)" %}</li>
+                    <li>{% trans "Browser cookie" %}</li>
+                    <li>{% trans "Accept-Language header from browser" %}</li>
+                    <li>{% trans "Default site language" %}</li>
+                </ol>
+                
+                <div class="alert alert-warning mt-4">
+                    <strong>{% trans "Note:" %}</strong>
+                    {% trans "Your language preference is saved automatically and will be remembered on your next visit." %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Test Language Switching" %}</h5>
+            </div>
+            <div class="card-body">
+                <p>{% trans "Click the buttons below to quickly switch between languages:" %}</p>
+                
+                <div class="btn-group" role="group">
+                    {% get_available_languages as LANGUAGES %}
+                    {% for lang_code, lang_name in LANGUAGES %}
+                        {% if lang_code == CURRENT_LANGUAGE %}
+                            <button class="btn btn-primary" disabled>
+                                {{ lang_name }}
+                            </button>
+                        {% else %}
+                            <a href="{% switch_language_url lang_code %}" class="btn btn-outline-primary">
+                                {{ lang_name }}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Language Information" %}</h5>
+                
+                <h6 class="mt-3">{% trans "Supported Languages" %}</h6>
+                <ul class="list-unstyled">
+                    {% get_available_languages as LANGUAGES %}
+                    {% for lang_code, lang_name in LANGUAGES %}
+                        <li>
+                            <strong>{{ lang_name }}</strong>
+                            <span class="text-muted">({{ lang_code }})</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                
+                <h6 class="mt-3">{% trans "Browser Language" %}</h6>
+                <p class="text-muted small">
+                    {% trans "Your browser's preferred language is detected from the Accept-Language header." %}
+                </p>
+                
+                <h6 class="mt-3">{% trans "Cookie Settings" %}</h6>
+                <p class="text-muted small">
+                    {% trans "Language preference is stored in a cookie named 'django_language' that expires in one year." %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

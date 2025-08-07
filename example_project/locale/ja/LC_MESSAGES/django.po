@@ -1,0 +1,254 @@
+# Japanese translations for django-i18n-noprefix example
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ja\n"
+
+msgid "Welcome"
+msgstr "ようこそ"
+
+msgid "Welcome to Django i18n No-Prefix Demo"
+msgstr "Django i18n No-Prefixデモへようこそ"
+
+msgid "This demo shows how to use Django internationalization without URL prefixes."
+msgstr "このデモは、URLプレフィックスなしでDjangoの国際化を使用する方法を示しています。"
+
+msgid "Home"
+msgstr "ホーム"
+
+msgid "About"
+msgstr "概要"
+
+msgid "Features"
+msgstr "機能"
+
+msgid "Styles"
+msgstr "スタイル"
+
+msgid "Settings"
+msgstr "設定"
+
+msgid "Language selection"
+msgstr "言語選択"
+
+msgid "Learn More"
+msgstr "詳細を見る"
+
+msgid "View Features"
+msgstr "機能を見る"
+
+msgid "No URL Prefixes"
+msgstr "URLプレフィックスなし"
+
+msgid "Keep your URLs clean without language codes. No more /en/, /ko/, or /ja/ in your paths."
+msgstr "言語コードなしできれいなURLを保ちます。パスに/en/、/ko/、/ja/はもう不要です。"
+
+msgid "Easy Integration"
+msgstr "簡単な統合"
+
+msgid "Simply replace Django's LocaleMiddleware with our NoPrefixLocaleMiddleware."
+msgstr "DjangoのLocaleMiddlewareを私たちのNoPrefixLocaleMiddlewareに置き換えるだけです。"
+
+msgid "Multiple Styles"
+msgstr "複数のスタイル"
+
+msgid "Choose from dropdown, list, or inline language selectors with various CSS frameworks."
+msgstr "様々なCSSフレームワークでドロップダウン、リスト、インライン言語セレクターから選択できます。"
+
+msgid "Quick Demo"
+msgstr "クイックデモ"
+
+msgid "Try changing the language using the selector in the navigation bar or footer."
+msgstr "ナビゲーションバーまたはフッターのセレクターを使用して言語を変更してみてください。"
+
+msgid "Current Language"
+msgstr "現在の言語"
+
+msgid "Code"
+msgstr "コード"
+
+msgid "Name"
+msgstr "名前"
+
+msgid "Direction"
+msgstr "方向"
+
+msgid "Available Languages"
+msgstr "利用可能な言語"
+
+msgid "Active"
+msgstr "アクティブ"
+
+msgid "Language Preferences"
+msgstr "言語設定"
+
+msgid "Choose your preferred language for the interface"
+msgstr "インターフェースの言語を選択してください"
+
+msgid "Change Language"
+msgstr "言語を変更"
+
+msgid "Select your preferred language from the list below:"
+msgstr "以下のリストから希望する言語を選択してください："
+
+msgid "Language Detection Priority"
+msgstr "言語検出優先順位"
+
+msgid "Session storage (if logged in)"
+msgstr "セッションストレージ（ログイン時）"
+
+msgid "Browser cookie"
+msgstr "ブラウザクッキー"
+
+msgid "Accept-Language header from browser"
+msgstr "ブラウザのAccept-Languageヘッダー"
+
+msgid "Default site language"
+msgstr "デフォルトサイト言語"
+
+msgid "Note:"
+msgstr "注："
+
+msgid "Your language preference is saved automatically and will be remembered on your next visit."
+msgstr "言語設定は自動的に保存され、次回の訪問時に記憶されます。"
+
+msgid "Test Language Switching"
+msgstr "言語切り替えテスト"
+
+msgid "Click the buttons below to quickly switch between languages:"
+msgstr "下のボタンをクリックして素早く言語を切り替えます："
+
+msgid "Language Information"
+msgstr "言語情報"
+
+msgid "Supported Languages"
+msgstr "サポート言語"
+
+msgid "Browser Language"
+msgstr "ブラウザ言語"
+
+msgid "Your browser's preferred language is detected from the Accept-Language header."
+msgstr "ブラウザの優先言語はAccept-Languageヘッダーから検出されます。"
+
+msgid "Cookie Settings"
+msgstr "クッキー設定"
+
+msgid "Language preference is stored in a cookie named 'django_language' that expires in one year."
+msgstr "言語設定は1年後に期限切れになる'django_language'というクッキーに保存されます。"
+
+msgid "Clean URLs without language codes like /en/ or /ko/"
+msgstr "/en/や/ko/のような言語コードのないクリーンなURL"
+
+msgid "Session & Cookie Support"
+msgstr "セッション＆クッキーサポート"
+
+msgid "Language preference is saved and remembered"
+msgstr "言語設定が保存され記憶されます"
+
+msgid "Dropdown, list, and inline language selectors"
+msgstr "ドロップダウン、リスト、インライン言語セレクター"
+
+msgid "Framework Support"
+msgstr "フレームワークサポート"
+
+msgid "Works with Bootstrap, Tailwind, or vanilla CSS"
+msgstr "Bootstrap、Tailwind、純粋CSSで動作"
+
+msgid "Bootstrap Style"
+msgstr "Bootstrapスタイル"
+
+msgid "Tailwind Style"
+msgstr "Tailwindスタイル"
+
+msgid "Vanilla CSS Style"
+msgstr "純粋CSSスタイル"
+
+msgid "Hello World"
+msgstr "こんにちは世界"
+
+msgid "This is a medium length text to demonstrate translation."
+msgstr "これは翻訳を実演するための中程度の長さのテキストです。"
+
+msgid "This is a longer text that shows how the translation system handles more complex content. It can include multiple sentences and paragraphs to give you a better idea of how your multilingual content will look."
+msgstr "これは翻訳システムがより複雑なコンテンツを処理する方法を示す長いテキストです。多言語コンテンツがどのように見えるかをよりよく理解できるように、複数の文と段落を含めることができます。"
+
+msgid "First item"
+msgstr "最初の項目"
+
+msgid "Second item"
+msgstr "2番目の項目"
+
+msgid "Third item"
+msgstr "3番目の項目"
+
+msgid "Fourth item"
+msgstr "4番目の項目"
+
+msgid "Fifth item"
+msgstr "5番目の項目"
+
+msgid "English"
+msgstr "英語"
+
+msgid "Korean"
+msgstr "韓国語"
+
+msgid "Japanese"
+msgstr "日本語"
+
+msgid "Active Style:"
+msgstr "アクティブスタイル："
+
+msgid "Vanilla CSS Language Selectors"
+msgstr "純粋CSS言語セレクター"
+
+msgid "Pure CSS implementation with no framework dependencies"
+msgstr "フレームワーク依存なしの純粋CSS実装"
+
+msgid "Dropdown Style"
+msgstr "ドロップダウンスタイル"
+
+msgid "Custom Theme"
+msgstr "カスタムテーマ"
+
+msgid "Inline Style"
+msgstr "インラインスタイル"
+
+msgid "Green Theme Inline"
+msgstr "グリーンテーマインライン"
+
+msgid "List Style Variations"
+msgstr "リストスタイルバリエーション"
+
+msgid "Default List"
+msgstr "デフォルトリスト"
+
+msgid "Purple Theme List"
+msgstr "パープルテーマリスト"
+
+msgid "Dark Mode Support"
+msgstr "ダークモードサポート"
+
+msgid "All styles automatically adapt to dark mode"
+msgstr "すべてのスタイルが自動的にダークモードに適応"
+
+msgid "CSS Variables"
+msgstr "CSS変数"
+
+msgid "Customize colors using CSS custom properties:"
+msgstr "CSSカスタムプロパティを使用して色をカスタマイズ："
+
+msgid "Automatic dark mode"
+msgstr "自動ダークモード"
+
+msgid "RTL language support"
+msgstr "RTL言語サポート"
+
+msgid "Mobile responsive"
+msgstr "モバイルレスポンシブ"
+
+msgid "Accessible (WCAG 2.1)"
+msgstr "アクセシブル（WCAG 2.1）"
+
+msgid "Print styles included"
+msgstr "印刷スタイル含む"

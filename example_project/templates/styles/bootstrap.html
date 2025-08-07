@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% load i18n_noprefix %}
+
+{% block extra_css %}
+<link href="{% static 'i18n_noprefix/css/bootstrap5.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">{{ page_title }}</h1>
+
+<div class="alert alert-info">
+    <strong>{% trans "Active Style:" %}</strong> {{ style_name }}
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="demo-section">
+            <h2>{% trans "Bootstrap 5 Language Selectors" %}</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h5>{% trans "Dropdown (Default)" %}</h5>
+                    <select class="form-select" onchange="window.location.href=this.options[this.selectedIndex].dataset.url">
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            <option value="{{ lang_code }}" 
+                                    data-url="{% switch_language_url lang_code %}"
+                                    {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
+                                {{ lang_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>{% trans "Dropdown (Small)" %}</h5>
+                    <select class="form-select form-select-sm">
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            <option {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
+                                {{ lang_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>{% trans "Dropdown (Large)" %}</h5>
+                    <select class="form-select form-select-lg">
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            <option {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
+                                {{ lang_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>{% trans "Button Group" %}</h5>
+                    <div class="btn-group" role="group">
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            {% if lang_code == CURRENT_LANGUAGE %}
+                                <button class="btn btn-primary">{{ lang_code|upper }}</button>
+                            {% else %}
+                                <a href="{% switch_language_url lang_code %}" class="btn btn-outline-primary">
+                                    {{ lang_code|upper }}
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h3>{% trans "List Group Style" %}</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="list-group">
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            {% if lang_code == CURRENT_LANGUAGE %}
+                                <span class="list-group-item active">
+                                    {{ lang_name }}
+                                    <span class="badge bg-white text-primary float-end">{% trans "Active" %}</span>
+                                </span>
+                            {% else %}
+                                <a href="{% switch_language_url lang_code %}" class="list-group-item list-group-item-action">
+                                    {{ lang_name }}
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>{% trans "Nav Pills" %}</h5>
+                    <ul class="nav nav-pills">
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            <li class="nav-item">
+                                {% if lang_code == CURRENT_LANGUAGE %}
+                                    <span class="nav-link active">{{ lang_name }}</span>
+                                {% else %}
+                                    <a class="nav-link" href="{% switch_language_url lang_code %}">{{ lang_name }}</a>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Integration Example" %}</h5>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Email" %}</label>
+                        <input type="email" class="form-control" placeholder="email@example.com">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Language" %}</label>
+                        <select class="form-select">
+                            {% for lang_code, lang_name in LANGUAGES %}
+                                <option {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
+                                    {{ lang_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        {% trans "Save Settings" %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

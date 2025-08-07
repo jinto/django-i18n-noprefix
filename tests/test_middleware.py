@@ -121,7 +121,8 @@ class TestNoPrefixLocaleMiddleware:
         
         middleware = NoPrefixLocaleMiddleware(get_response)
         request = mock_request('/')
-        request.session.session_key = 'test-session-key'
+        # Session exists (has_key method returns True for any key)
+        request.session['_session_exists'] = True
         
         response = middleware(request)
         

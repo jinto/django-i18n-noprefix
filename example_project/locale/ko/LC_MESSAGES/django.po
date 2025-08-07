@@ -1,0 +1,197 @@
+# Korean translations for django-i18n-noprefix example
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ko\n"
+
+msgid "Welcome"
+msgstr "환영합니다"
+
+msgid "Welcome to Django i18n No-Prefix Demo"
+msgstr "Django i18n No-Prefix 데모에 오신 것을 환영합니다"
+
+msgid "This demo shows how to use Django internationalization without URL prefixes."
+msgstr "이 데모는 URL 접두사 없이 Django 국제화를 사용하는 방법을 보여줍니다."
+
+msgid "Home"
+msgstr "홈"
+
+msgid "About"
+msgstr "소개"
+
+msgid "Features"
+msgstr "기능"
+
+msgid "Styles"
+msgstr "스타일"
+
+msgid "Settings"
+msgstr "설정"
+
+msgid "Language selection"
+msgstr "언어 선택"
+
+msgid "Learn More"
+msgstr "더 알아보기"
+
+msgid "View Features"
+msgstr "기능 보기"
+
+msgid "No URL Prefixes"
+msgstr "URL 접두사 없음"
+
+msgid "Keep your URLs clean without language codes. No more /en/, /ko/, or /ja/ in your paths."
+msgstr "언어 코드 없이 깨끗한 URL을 유지하세요. 경로에 /en/, /ko/, /ja/가 더 이상 없습니다."
+
+msgid "Easy Integration"
+msgstr "쉬운 통합"
+
+msgid "Simply replace Django's LocaleMiddleware with our NoPrefixLocaleMiddleware."
+msgstr "Django의 LocaleMiddleware를 우리의 NoPrefixLocaleMiddleware로 간단히 교체하세요."
+
+msgid "Multiple Styles"
+msgstr "다양한 스타일"
+
+msgid "Choose from dropdown, list, or inline language selectors with various CSS frameworks."
+msgstr "다양한 CSS 프레임워크와 함께 드롭다운, 리스트, 인라인 언어 선택기 중에서 선택하세요."
+
+msgid "Quick Demo"
+msgstr "빠른 데모"
+
+msgid "Try changing the language using the selector in the navigation bar or footer."
+msgstr "네비게이션 바나 푸터의 선택기를 사용하여 언어를 변경해보세요."
+
+msgid "Current Language"
+msgstr "현재 언어"
+
+msgid "Code"
+msgstr "코드"
+
+msgid "Name"
+msgstr "이름"
+
+msgid "Direction"
+msgstr "방향"
+
+msgid "Available Languages"
+msgstr "사용 가능한 언어"
+
+msgid "Active"
+msgstr "활성"
+
+msgid "Language Preferences"
+msgstr "언어 설정"
+
+msgid "Choose your preferred language for the interface"
+msgstr "인터페이스에 사용할 언어를 선택하세요"
+
+msgid "Change Language"
+msgstr "언어 변경"
+
+msgid "Select your preferred language from the list below:"
+msgstr "아래 목록에서 선호하는 언어를 선택하세요:"
+
+msgid "Language Detection Priority"
+msgstr "언어 감지 우선순위"
+
+msgid "Session storage (if logged in)"
+msgstr "세션 저장소 (로그인한 경우)"
+
+msgid "Browser cookie"
+msgstr "브라우저 쿠키"
+
+msgid "Accept-Language header from browser"
+msgstr "브라우저의 Accept-Language 헤더"
+
+msgid "Default site language"
+msgstr "기본 사이트 언어"
+
+msgid "Note:"
+msgstr "참고:"
+
+msgid "Your language preference is saved automatically and will be remembered on your next visit."
+msgstr "언어 설정은 자동으로 저장되며 다음 방문 시 기억됩니다."
+
+msgid "Test Language Switching"
+msgstr "언어 전환 테스트"
+
+msgid "Click the buttons below to quickly switch between languages:"
+msgstr "아래 버튼을 클릭하여 빠르게 언어를 전환하세요:"
+
+msgid "Language Information"
+msgstr "언어 정보"
+
+msgid "Supported Languages"
+msgstr "지원 언어"
+
+msgid "Browser Language"
+msgstr "브라우저 언어"
+
+msgid "Your browser's preferred language is detected from the Accept-Language header."
+msgstr "브라우저의 선호 언어는 Accept-Language 헤더에서 감지됩니다."
+
+msgid "Cookie Settings"
+msgstr "쿠키 설정"
+
+msgid "Language preference is stored in a cookie named 'django_language' that expires in one year."
+msgstr "언어 설정은 1년 후 만료되는 'django_language' 쿠키에 저장됩니다."
+
+msgid "Clean URLs without language codes like /en/ or /ko/"
+msgstr "/en/이나 /ko/ 같은 언어 코드 없는 깨끗한 URL"
+
+msgid "Session & Cookie Support"
+msgstr "세션 및 쿠키 지원"
+
+msgid "Language preference is saved and remembered"
+msgstr "언어 설정이 저장되고 기억됩니다"
+
+msgid "Dropdown, list, and inline language selectors"
+msgstr "드롭다운, 리스트, 인라인 언어 선택기"
+
+msgid "Framework Support"
+msgstr "프레임워크 지원"
+
+msgid "Works with Bootstrap, Tailwind, or vanilla CSS"
+msgstr "Bootstrap, Tailwind, 순수 CSS와 함께 작동"
+
+msgid "Bootstrap Style"
+msgstr "Bootstrap 스타일"
+
+msgid "Tailwind Style"
+msgstr "Tailwind 스타일"
+
+msgid "Vanilla CSS Style"
+msgstr "순수 CSS 스타일"
+
+msgid "Hello World"
+msgstr "안녕하세요"
+
+msgid "This is a medium length text to demonstrate translation."
+msgstr "이것은 번역을 시연하기 위한 중간 길이의 텍스트입니다."
+
+msgid "This is a longer text that shows how the translation system handles more complex content. It can include multiple sentences and paragraphs to give you a better idea of how your multilingual content will look."
+msgstr "이것은 번역 시스템이 더 복잡한 콘텐츠를 처리하는 방법을 보여주는 긴 텍스트입니다. 다국어 콘텐츠가 어떻게 보일지 더 잘 이해할 수 있도록 여러 문장과 단락을 포함할 수 있습니다."
+
+msgid "First item"
+msgstr "첫 번째 항목"
+
+msgid "Second item"
+msgstr "두 번째 항목"
+
+msgid "Third item"
+msgstr "세 번째 항목"
+
+msgid "Fourth item"
+msgstr "네 번째 항목"
+
+msgid "Fifth item"
+msgstr "다섯 번째 항목"
+
+msgid "English"
+msgstr "영어"
+
+msgid "Korean"
+msgstr "한국어"
+
+msgid "Japanese"
+msgstr "일본어"

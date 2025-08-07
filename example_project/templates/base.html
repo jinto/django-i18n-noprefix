@@ -1,0 +1,129 @@
+{% load i18n %}
+{% load static %}
+{% load i18n_noprefix %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ page_title }}{% endblock %} - Django i18n No-Prefix Demo</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Our package CSS -->
+    <link href="{% static 'i18n_noprefix/css/vanilla.css' %}" rel="stylesheet">
+    
+    <!-- Demo styles -->
+    <style>
+        body {
+            padding-top: 70px;
+        }
+        .language-selector {
+            min-width: 150px;
+        }
+        .demo-section {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            background: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'demo:home' %}">
+                Django i18n No-Prefix
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" 
+                           href="{% url 'demo:home' %}">{% trans "Home" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" 
+                           href="{% url 'demo:about' %}">{% trans "About" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'features' %}active{% endif %}" 
+                           href="{% url 'demo:features' %}">{% trans "Features" %}</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            {% trans "Styles" %}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'demo:style-bootstrap' %}">Bootstrap 5</a></li>
+                            <li><a class="dropdown-item" href="{% url 'demo:style-tailwind' %}">Tailwind CSS</a></li>
+                            <li><a class="dropdown-item" href="{% url 'demo:style-vanilla' %}">Vanilla CSS</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'settings' %}active{% endif %}" 
+                           href="{% url 'demo:settings' %}">{% trans "Settings" %}</a>
+                    </li>
+                </ul>
+                
+                <!-- Language Selector in Navbar -->
+                <div class="language-selector">
+                    <select class="form-select form-select-sm" 
+                            onchange="window.location.href=this.options[this.selectedIndex].dataset.url"
+                            aria-label="{% trans 'Language selection' %}">
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            <option value="{{ lang_code }}" 
+                                    data-url="{% switch_language_url lang_code %}"
+                                    {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
+                                {{ lang_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="text-muted">
+                        © 2024 Django i18n No-Prefix | 
+                        <a href="https://github.com/jinto/django-i18n-noprefix">GitHub</a>
+                    </p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <!-- Inline language selector in footer -->
+                    <div class="d-inline-block">
+                        {% language_selector style='inline' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
