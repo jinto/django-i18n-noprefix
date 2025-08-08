@@ -75,7 +75,8 @@ class NoPrefixLocaleMiddleware:
         response = self.get_response(request)
 
         # Save language preference if it changed
-        self.save_language(request, response, language)
+        # Use request.LANGUAGE_CODE which may have been updated by views
+        self.save_language(request, response, request.LANGUAGE_CODE)
 
         return response
 
@@ -139,7 +140,7 @@ class NoPrefixLocaleMiddleware:
         return language in available_languages
 
     def save_language(
-        self, request: HttpRequest, response: HttpResponse, original_language: str
+        self, request: HttpRequest, response: HttpResponse, current_language: str
     ) -> None:
         """
         Save language preference if it changed.
@@ -147,10 +148,13 @@ class NoPrefixLocaleMiddleware:
         - Saves to session if available
         - Always saves to cookie for session-less users
         """
-        current_language = getattr(request, "LANGUAGE_CODE", original_language)
+        # Check if language was explicitly set (e.g., via set_language view)
+        language_was_set = getattr(request, "_language_was_set", False)
 
-        # Only save if language changed
-        if current_language != original_language:
+        # Save if language was explicitly set or if there's no cookie yet
+        should_save = language_was_set or not request.COOKIES.get(self.cookie_name)
+
+        if should_save:
             # Save to session if available
             if (
                 hasattr(request, "session")

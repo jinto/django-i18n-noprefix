@@ -103,18 +103,14 @@ echo
 # 3. 테스트 실행
 print_info "테스트 실행 중..."
 
-if command -v pytest &> /dev/null; then
-    echo "pytest 실행..."
-    if ! pytest tests/ -q; then
-        print_error "테스트 실패!"
-        if ! confirm "테스트 실패에도 계속 진행하시겠습니까?"; then
-            exit 1
-        fi
-    else
-        print_success "모든 테스트 통과"
+echo "pytest 실행..."
+if ! uv run pytest tests/ -q; then
+    print_error "테스트 실패!"
+    if ! confirm "테스트 실패에도 계속 진행하시겠습니까?"; then
+        exit 1
     fi
 else
-    print_warning "pytest가 설치되지 않았습니다. 테스트를 건너뜁니다."
+    print_success "모든 테스트 통과"
 fi
 echo
 
@@ -122,31 +118,27 @@ echo
 print_info "코드 품질 검사 중..."
 
 # Black 검사
-if command -v black &> /dev/null; then
-    echo "Black 포맷 검사..."
-    if ! black --check . > /dev/null 2>&1; then
-        print_warning "코드 포맷이 맞지 않습니다!"
-        if confirm "Black으로 자동 포맷을 적용하시겠습니까?"; then
-            black .
-            print_success "코드 포맷 적용 완료"
-        fi
-    else
-        print_success "코드 포맷 정상"
+echo "Black 포맷 검사..."
+if ! uv run black --check . > /dev/null 2>&1; then
+    print_warning "코드 포맷이 맞지 않습니다!"
+    if confirm "Black으로 자동 포맷을 적용하시겠습니까?"; then
+        uv run black .
+        print_success "코드 포맷 적용 완료"
     fi
+else
+    print_success "코드 포맷 정상"
 fi
 
 # Ruff 검사
-if command -v ruff &> /dev/null; then
-    echo "Ruff 린트 검사..."
-    if ! ruff check . > /dev/null 2>&1; then
-        print_warning "린트 오류가 있습니다!"
-        ruff check .
-        if ! confirm "린트 오류에도 계속 진행하시겠습니까?"; then
-            exit 1
-        fi
-    else
-        print_success "린트 검사 통과"
+echo "Ruff 린트 검사..."
+if ! uv run ruff check . > /dev/null 2>&1; then
+    print_warning "린트 오류가 있습니다!"
+    uv run ruff check .
+    if ! confirm "린트 오류에도 계속 진행하시겠습니까?"; then
+        exit 1
     fi
+else
+    print_success "린트 검사 통과"
 fi
 echo
 

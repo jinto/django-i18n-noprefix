@@ -35,6 +35,7 @@ def activate_language(request: HttpRequest, lang_code: str) -> bool:
     if is_valid_language(lang_code):
         translation.activate(lang_code)
         request.LANGUAGE_CODE = lang_code
+        request._language_was_set = True  # Flag for middleware to save cookie
 
         # Save to session if available
         if hasattr(request, "session"):

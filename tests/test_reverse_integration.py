@@ -54,8 +54,9 @@ class ReverseIntegrationTest(TestCase):
                 self.assertEqual(url, "/")
 
                 # Test with named URL
-                url = reverse("i18n:set-language", kwargs={"lang_code": "ko"})
-                self.assertNotIn(f"/{lang_code}/", url)
+                url = reverse("i18n:change_language", kwargs={"lang_code": "ko"})
+                # Check that URL doesn't START with language prefix
+                self.assertFalse(url.startswith(f"/{lang_code}/"))
                 self.assertEqual(url, "/i18n/set-language/ko/")
 
     def test_reverse_consistency_across_languages(self):
@@ -82,18 +83,20 @@ class ReverseIntegrationTest(TestCase):
         # Test URL with arguments
         for lang_code in ["en", "ko", "ja"]:
             with translation.override(lang_code):
-                url = reverse("i18n:set-language", args=["ko"])
+                url = reverse("i18n:change_language", args=["ko"])
                 self.assertEqual(url, "/i18n/set-language/ko/")
-                self.assertNotIn(f"/{lang_code}/", url)
+                # Check URL doesn't START with language prefix
+                self.assertFalse(url.startswith(f"/{lang_code}/"))
 
     def test_reverse_with_kwargs(self):
         """Test reverse() with keyword arguments."""
         # Test URL with kwargs
         for lang_code in ["en", "ko", "ja"]:
             with translation.override(lang_code):
-                url = reverse("i18n:set-language", kwargs={"lang_code": "ja"})
+                url = reverse("i18n:change_language", kwargs={"lang_code": "ja"})
                 self.assertEqual(url, "/i18n/set-language/ja/")
-                self.assertNotIn(f"/{lang_code}/", url)
+                # Check URL doesn't START with language prefix
+                self.assertFalse(url.startswith(f"/{lang_code}/"))
 
     def test_reverse_in_request_context(self):
         """Test reverse() within actual request context."""
@@ -116,7 +119,7 @@ class ReverseIntegrationTest(TestCase):
         self.assertEqual(resolver_match.url_name, "home")
 
         resolver_match = resolve("/i18n/set-language/ko/")
-        self.assertEqual(resolver_match.url_name, "set-language")
+        self.assertEqual(resolver_match.url_name, "change_language")
         self.assertEqual(resolver_match.kwargs["lang_code"], "ko")
 
     def test_reverse_with_query_string(self):
@@ -146,7 +149,7 @@ class ReverseIntegrationTest(TestCase):
             self.assertNotIn("/ko/", url)
 
             # Test another URL
-            url = reverse("i18n:set-language-ajax")
+            url = reverse("i18n:set_language_ajax")
             self.assertEqual(url, "/i18n/set-language-ajax/")
             self.assertNotIn("/ko/", url)
 
@@ -178,7 +181,7 @@ class ReverseIntegrationTest(TestCase):
         # Test all our named patterns
         named_patterns = [
             ("home", "/"),
-            ("i18n:set-language-ajax", "/i18n/set-language-ajax/"),
+            ("i18n:set_language_ajax", "/i18n/set-language-ajax/"),
         ]
 
         for name, expected_url in named_patterns:
@@ -190,12 +193,13 @@ class ReverseIntegrationTest(TestCase):
     def test_app_namespace_urls(self):
         """Test URLs with app namespace."""
         # Our i18n URLs use namespace
-        url = reverse("i18n:set-language", kwargs={"lang_code": "ja"})
+        url = reverse("i18n:change_language", kwargs={"lang_code": "ja"})
         self.assertEqual(url, "/i18n/set-language/ja/")
 
         # No language prefix should be added
         for lang in ["en", "ko", "ja"]:
             with translation.override(lang):
-                url = reverse("i18n:set-language", kwargs={"lang_code": "en"})
+                url = reverse("i18n:change_language", kwargs={"lang_code": "en"})
                 self.assertEqual(url, "/i18n/set-language/en/")
-                self.assertNotIn(f"/{lang}/", url)
+                # Check URL doesn't START with language prefix
+                self.assertFalse(url.startswith(f"/{lang}/"))

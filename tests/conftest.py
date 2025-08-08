@@ -87,8 +87,18 @@ def mock_request(rf):
         request_method = getattr(rf, method.lower())
         request = request_method(path, **kwargs)
 
-        # Add session-like dictionary
-        request.session = {}
+        # Add session-like dictionary with minimal SessionBase interface
+        class MockSession(dict):
+            """Mock session that behaves like Django's SessionBase."""
+
+            def __init__(self):
+                super().__init__()
+                self.modified = False
+
+            def save(self):
+                self.modified = True
+
+        request.session = MockSession()
 
         # Add COOKIES
         request.COOKIES = {}
@@ -106,6 +116,7 @@ def mock_request(rf):
 @pytest.fixture
 def mock_response():
     """Create a mock response object."""
+    from unittest.mock import Mock
 
     class MockResponse:
         def __init__(self):
@@ -113,8 +124,10 @@ def mock_response():
             self.status_code = 200
             self.content = b""
             self._headers = {}
+            # Create a Mock for set_cookie that also updates cookies
+            self.set_cookie = Mock(side_effect=self._set_cookie)
 
-        def set_cookie(self, key, value, **kwargs):
+        def _set_cookie(self, key, value, **kwargs):
             self.cookies[key] = value
 
         def delete_cookie(self, key):

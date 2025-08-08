@@ -126,8 +126,9 @@ class TestNoPrefixLocaleMiddleware:
         """Test that language changes are saved to session and cookie."""
 
         def get_response(request):
-            # Simulate language change in view
+            # Simulate language change in view (like set_language view would do)
             request.LANGUAGE_CODE = "ja"
+            request._language_was_set = True  # Flag that language was explicitly set
             return mock_response
 
         middleware = NoPrefixLocaleMiddleware(get_response)
@@ -135,28 +136,33 @@ class TestNoPrefixLocaleMiddleware:
         # Session exists (has_key method returns True for any key)
         request.session["_session_exists"] = True
 
-        response = middleware(request)
+        middleware(request)
 
         # Check session was updated
         assert request.session.get("django_language") == "ja"
         # Check cookie was set
-        assert response.cookies.get(settings.LANGUAGE_COOKIE_NAME) == "ja"
+        mock_response.set_cookie.assert_called_once()
+        call_args = mock_response.set_cookie.call_args
+        assert call_args[1]["key"] == settings.LANGUAGE_COOKIE_NAME
+        assert call_args[1]["value"] == "ja"
 
     def test_no_language_change_no_save(self, mock_request, mock_response):
         """Test that no save occurs when language doesn't change."""
 
         def get_response(request):
-            # Language stays the same
+            # Language stays the same, no explicit language change
             return mock_response
 
         middleware = NoPrefixLocaleMiddleware(get_response)
         request = mock_request("/")
         request.session["django_language"] = "ko"
+        # Simulate that cookie already exists
+        request.COOKIES[settings.LANGUAGE_COOKIE_NAME] = "ko"
 
-        response = middleware(request)
+        middleware(request)
 
-        # Check cookie was not set
-        assert settings.LANGUAGE_COOKIE_NAME not in response.cookies
+        # Check cookie was not set again (no set_cookie call)
+        mock_response.set_cookie.assert_not_called()
 
     def test_translation_activation(self, mock_request):
         """Test that Django translation is properly activated."""

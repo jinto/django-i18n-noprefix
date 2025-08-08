@@ -20,12 +20,13 @@ from ..utils import is_valid_language
 register = template.Library()
 
 
-@register.simple_tag
-def switch_language_url(lang_code, next_url=None):
+@register.simple_tag(takes_context=True)
+def switch_language_url(context, lang_code, next_url=None):
     """
     Generate URL for switching to a specific language.
 
     Args:
+        context: Template context
         lang_code: The language code to switch to
         next_url: Optional URL to redirect to after switching (default: current page)
 
@@ -40,6 +41,12 @@ def switch_language_url(lang_code, next_url=None):
         return "#"  # Return anchor for invalid language
 
     base_url = reverse("django_i18n_noprefix:change_language", args=[lang_code])
+
+    # If no next_url provided, use the current page
+    if not next_url:
+        request = context.get("request")
+        if request:
+            next_url = request.path
 
     if next_url:
         params = urlencode({"next": next_url})
