@@ -25,7 +25,6 @@ Django's built-in i18n system automatically adds language codes to your URLs (`/
 | **SEO** | Duplicate content issues | Single URL per content |
 | **Sharing** | Language-specific links | Universal links |
 | **User Experience** | Exposes technical details | Clean, professional URLs |
-| **API Routes** | `/api/v1/en/users/` 😱 | `/api/v1/users/` ✨ |
 
 ### Real-World Example
 

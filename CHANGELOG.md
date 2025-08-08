@@ -7,14 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-- GitHub Actions release workflow for automated PyPI deployment
-- TestPyPI integration for pre-release testing
-- Release helper script for local validation
-- Version management with __version__.py
-- Automated release notes generation
+## [0.1.1] - 2025-01-08
 
-## [0.1.0] - TBD
+### Changed
+- Improved version testing to use SemVer pattern validation instead of hardcoded values
+- Added build and twine dependencies for package distribution
+
+### Fixed
+- Removed API routes example from README comparison table
+
+## [0.1.0] - 2025-01-08
 
 ### Added
 - Initial implementation of NoPrefixLocaleMiddleware

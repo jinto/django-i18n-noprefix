@@ -146,9 +146,17 @@ class TestVersionInfo:
 
     def test_version_defined(self):
         """Test that version is defined in __init__.py."""
+        import re
+
         from django_i18n_noprefix import __version__
 
-        assert __version__ == "0.1.0"
+        # 버전이 정의되어 있고 SemVer 형식인지 확인
+        assert __version__ is not None
+        assert isinstance(__version__, str)
+        # SemVer 패턴 검증 (예: 0.1.0, 1.0.0-beta.1, 2.0.0+build.123)
+        assert re.match(
+            r"^\d+\.\d+\.\d+(-[a-zA-Z0-9\.]+)?(\+[a-zA-Z0-9\.]+)?$", __version__
+        )
 
     def test_public_api(self):
         """Test that public API is properly exported."""
