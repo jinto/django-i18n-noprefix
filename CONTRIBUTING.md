@@ -91,6 +91,7 @@ All pull requests are automatically tested with:
 
 - **Tests** (`test.yml`): Runs on every push and PR
 - **Code Quality** (`quality.yml`): Checks code style and linting
+- **Release** (`release.yml`): Automated PyPI deployment on tags
 - **Dependabot**: Weekly dependency updates
 
 #### Local Testing
@@ -116,6 +117,26 @@ make typecheck
 ## Code of Conduct
 
 Please be respectful and inclusive in all interactions. We want this to be a welcoming environment for everyone.
+
+### Release Process
+
+For maintainers with release permissions:
+
+1. **Prepare Release**:
+   ```bash
+   ./scripts/release.sh
+   ```
+
+2. **Push Tag**:
+   ```bash
+   git push origin vX.Y.Z
+   ```
+
+3. **Monitor Deployment**:
+   - GitHub Actions will handle TestPyPI and PyPI deployment
+   - Manual approval required for production PyPI
+
+See [docs/RELEASE.md](docs/RELEASE.md) for detailed release instructions.
 
 ## Questions?
 

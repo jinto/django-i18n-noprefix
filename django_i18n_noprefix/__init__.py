@@ -11,10 +11,10 @@ For most i18n operations, use Django's built-in functions:
 - `translation.get_language_info()` for language details
 """
 
+from .__version__ import __version__
 from .middleware import NoPrefixLocaleMiddleware
 from .utils import activate_language, is_valid_language
 
-__version__ = "0.1.0"
 __author__ = "jinto"
 __email__ = ""
 __license__ = "MIT"

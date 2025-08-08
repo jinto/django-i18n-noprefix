@@ -2,6 +2,7 @@
 
 [![Tests](https://github.com/jinto/django-i18n-noprefix/workflows/Tests/badge.svg)](https://github.com/jinto/django-i18n-noprefix/actions/workflows/test.yml)
 [![Code Quality](https://github.com/jinto/django-i18n-noprefix/workflows/Code%20Quality/badge.svg)](https://github.com/jinto/django-i18n-noprefix/actions/workflows/quality.yml)
+[![Release](https://github.com/jinto/django-i18n-noprefix/workflows/Release/badge.svg)](https://github.com/jinto/django-i18n-noprefix/actions/workflows/release.yml)
 [![codecov](https://codecov.io/gh/jinto/django-i18n-noprefix/branch/main/graph/badge.svg)](https://codecov.io/gh/jinto/django-i18n-noprefix)
 [![PyPI Version](https://img.shields.io/pypi/v/django-i18n-noprefix.svg)](https://pypi.org/project/django-i18n-noprefix/)
 [![Python Support](https://img.shields.io/pypi/pyversions/django-i18n-noprefix.svg)](https://pypi.org/project/django-i18n-noprefix/)
