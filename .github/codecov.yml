@@ -1,0 +1,53 @@
+codecov:
+  require_ci_to_pass: false
+  max_report_age: 48
+
+coverage:
+  precision: 2
+  round: down
+  range: "60...90"
+
+  status:
+    project:
+      default:
+        target: 70%
+        threshold: 5%
+        if_not_found: success
+        if_ci_failed: error
+    patch:
+      default:
+        target: 60%
+        threshold: 10%
+        base: auto
+        if_not_found: success
+        if_ci_failed: error
+
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
+
+comment:
+  layout: "reach,diff,flags,tree,betaprofiling"
+  behavior: default
+  require_changes: false
+  require_base: false
+  require_head: true
+
+ignore:
+  - "tests/**"
+  - "example_project/**"
+  - "docs/**"
+  - "scripts/**"
+  - "**/__pycache__/**"
+  - "**/migrations/**"
+  - "setup.py"
+
+flags:
+  unittests:
+    paths:
+      - django_i18n_noprefix/
+    carryforward: true

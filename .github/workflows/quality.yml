@@ -1,0 +1,93 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Full history for better analysis
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        version: "latest"
+        enable-cache: true
+
+    - name: Install dependencies
+      run: |
+        uv venv
+        uv pip install -e ".[dev]"
+
+    - name: Run black (formatting)
+      run: |
+        echo "::group::Black Formatting Check"
+        uv run black --check --diff .
+        echo "::endgroup::"
+
+    - name: Run ruff (linting)
+      run: |
+        echo "::group::Ruff Linting"
+        uv run ruff check . --output-format=github
+        echo "::endgroup::"
+
+    - name: Run ruff format check
+      run: |
+        echo "::group::Ruff Format Check"
+        uv run ruff format --check .
+        echo "::endgroup::"
+
+    - name: Run mypy (type checking)
+      run: |
+        echo "::group::Mypy Type Checking"
+        uv run mypy django_i18n_noprefix --no-error-summary || true
+        echo "::endgroup::"
+      continue-on-error: true
+
+    - name: Check for security issues (bandit)
+      run: |
+        echo "::group::Security Check"
+        uv pip install bandit[toml]
+        uv run bandit -r django_i18n_noprefix -ll || true
+        echo "::endgroup::"
+      continue-on-error: true
+
+    - name: Check docstrings (pydocstyle)
+      run: |
+        echo "::group::Docstring Check"
+        uv pip install pydocstyle
+        uv run pydocstyle django_i18n_noprefix --convention=google || true
+        echo "::endgroup::"
+      continue-on-error: true
+
+  pre-commit:
+    name: Pre-commit Hooks
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Run pre-commit
+      uses: pre-commit/action@v3.0.1
+      with:
+        extra_args: --all-files --show-diff-on-failure

@@ -1,9 +1,11 @@
 # django-i18n-noprefix
 
+[![Tests](https://github.com/jinto/django-i18n-noprefix/workflows/Tests/badge.svg)](https://github.com/jinto/django-i18n-noprefix/actions/workflows/test.yml)
+[![Code Quality](https://github.com/jinto/django-i18n-noprefix/workflows/Code%20Quality/badge.svg)](https://github.com/jinto/django-i18n-noprefix/actions/workflows/quality.yml)
+[![codecov](https://codecov.io/gh/jinto/django-i18n-noprefix/branch/main/graph/badge.svg)](https://codecov.io/gh/jinto/django-i18n-noprefix)
 [![PyPI Version](https://img.shields.io/pypi/v/django-i18n-noprefix.svg)](https://pypi.org/project/django-i18n-noprefix/)
 [![Python Support](https://img.shields.io/pypi/pyversions/django-i18n-noprefix.svg)](https://pypi.org/project/django-i18n-noprefix/)
-[![Django Support](https://img.shields.io/badge/Django-4.2%20%7C%205.0%20%7C%205.1%20%7C%205.2-green.svg)](https://www.djangoproject.com/)
-[![Test Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen.svg)](https://github.com/jinto/django-i18n-noprefix)
+[![Django Support](https://img.shields.io/badge/Django-4.2%20%7C%205.0%20%7C%205.1-green.svg)](https://www.djangoproject.com/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jinto/django-i18n-noprefix/blob/main/LICENSE)
 
 **Clean URLs for multilingual Django sites without language prefixes.**
@@ -106,7 +108,7 @@ urlpatterns = [
 <body>
     <!-- Add anywhere in your template -->
     {% language_selector %}
-    
+
     <!-- Your content -->
     {% block content %}{% endblock %}
 </body>
@@ -209,7 +211,7 @@ Languages are detected in this order:
 <!-- Custom dropdown -->
 <select onchange="location.href=this.value">
     {% for lang_code, lang_name in LANGUAGES %}
-        <option value="{% switch_language_url lang_code %}" 
+        <option value="{% switch_language_url lang_code %}"
                 {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
             {{ lang_name }}
         </option>
@@ -219,7 +221,7 @@ Languages are detected in this order:
 <!-- Custom buttons -->
 <div class="language-buttons">
     {% for lang_code, lang_name in LANGUAGES %}
-        <a href="{% switch_language_url lang_code %}" 
+        <a href="{% switch_language_url lang_code %}"
            class="btn {% if lang_code|is_current_language %}active{% endif %}">
             {{ lang_code|upper }}
         </a>
@@ -331,7 +333,7 @@ def my_view(request):
     # Django's translation functions work normally
     message = _("Welcome to our site")
     current_language = get_language()
-    
+
     return render(request, 'template.html', {
         'message': message,
         'language': current_language
@@ -346,12 +348,12 @@ Migrating from Django's default i18n is straightforward:
    ```python
    # Old: urls.py
    from django.conf.urls.i18n import i18n_patterns
-   
+
    urlpatterns = i18n_patterns(
        path('about/', views.about),
        # ...
    )
-   
+
    # New: urls.py
    urlpatterns = [
        path('about/', views.about),
@@ -455,7 +457,7 @@ The example project includes:
 class NoPrefixLocaleMiddleware:
     """
     Replacement for Django's LocaleMiddleware that doesn't use URL prefixes.
-    
+
     Methods:
         get_language(request) -> str: Detect language from request
         save_language(request, response, language) -> None: Persist language choice

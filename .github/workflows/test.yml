@@ -1,0 +1,157 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - '.gitignore'
+      - 'LICENSE'
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - '.gitignore'
+      - 'LICENSE'
+  schedule:
+    # Run tests weekly on Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+    # Allow manual trigger
+
+jobs:
+  test:
+    name: Python ${{ matrix.python-version }} / Django ${{ matrix.django-version }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        django-version: ["4.2", "5.0", "5.1"]
+        exclude:
+          # Django 5.0+ requires Python 3.10+
+          - python-version: "3.8"
+            django-version: "5.0"
+          - python-version: "3.8"
+            django-version: "5.1"
+          - python-version: "3.9"
+            django-version: "5.0"
+          - python-version: "3.9"
+            django-version: "5.1"
+          # Django 5.1 requires Python 3.10+
+          - python-version: "3.10"
+            django-version: "5.1"
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        version: "latest"
+        enable-cache: true
+        cache-dependency-glob: |
+          **/pyproject.toml
+          **/uv.lock
+
+    - name: Create virtual environment
+      run: uv venv
+
+    - name: Install dependencies with Django ${{ matrix.django-version }}
+      run: |
+        uv pip install -e ".[dev]"
+        uv pip install "Django~=${{ matrix.django-version }}.0"
+        uv pip list
+
+    - name: Run linting (ruff)
+      run: |
+        uv run ruff check .
+      continue-on-error: ${{ matrix.python-version != '3.11' }}
+
+    - name: Run formatting check (black)
+      run: |
+        uv run black --check .
+      continue-on-error: ${{ matrix.python-version != '3.11' }}
+
+    - name: Run type checking (mypy)
+      run: |
+        uv run mypy django_i18n_noprefix
+      continue-on-error: true
+
+    - name: Run tests with coverage
+      run: |
+        uv run pytest tests/ \
+          --verbose \
+          --cov=django_i18n_noprefix \
+          --cov-report=term-missing \
+          --cov-report=xml \
+          --cov-report=html \
+          --tb=short
+      env:
+        DJANGO_SETTINGS_MODULE: tests.test_project.settings
+
+    - name: Upload coverage reports
+      if: matrix.python-version == '3.11' && matrix.django-version == '5.0'
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: |
+          coverage.xml
+          htmlcov/
+
+    - name: Display coverage summary
+      if: always()
+      run: |
+        uv run coverage report || true
+
+  coverage:
+    name: Upload Coverage
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Download coverage reports
+      uses: actions/download-artifact@v4
+      with:
+        name: coverage-report
+        path: .
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+        verbose: true
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      continue-on-error: true
+
+  check:
+    name: All tests passed
+    needs: test
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+    - name: Check test results
+      run: |
+        if [ "${{ needs.test.result }}" != "success" ]; then
+          echo "Tests failed!"
+          exit 1
+        fi
+        echo "All tests passed successfully!"

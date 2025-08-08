@@ -1,0 +1,53 @@
+version: 2
+updates:
+  # Python dependencies
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "jinto"
+    labels:
+      - "dependencies"
+      - "python"
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
+    ignore:
+      # Don't update Django major versions automatically
+      - dependency-name: "django"
+        update-types: ["version-update:semver-major"]
+    groups:
+      # Group all development dependencies together
+      dev-dependencies:
+        patterns:
+          - "pytest*"
+          - "black"
+          - "ruff"
+          - "mypy"
+          - "pre-commit"
+          - "coverage*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "jinto"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci"
+      include: "scope"

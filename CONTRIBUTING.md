@@ -27,6 +27,13 @@ git clone git@github.com:your-username/django-i18n-noprefix.git
 cd django-i18n-noprefix
 ```
 
+2. Use the setup script (recommended):
+```bash
+./scripts/setup-dev.sh
+```
+
+Or manually:
+
 2. Create a virtual environment:
 ```bash
 python -m venv venv
@@ -36,6 +43,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 3. Install in development mode:
 ```bash
 pip install -e ".[dev]"
+pre-commit install
 ```
 
 ### Running Tests
@@ -56,11 +64,47 @@ pytest tests/test_middleware.py
 - We use [Black](https://github.com/psf/black) for code formatting
 - We use [Ruff](https://github.com/charliermarsh/ruff) for linting
 - Maximum line length is 88 characters
+- Type hints are encouraged for better code clarity
 
 Run formatters before committing:
 ```bash
+make format  # Or manually:
 black .
 ruff check . --fix
+```
+
+Pre-commit hooks will automatically check code style:
+```bash
+pre-commit run --all-files
+```
+
+### CI/CD Process
+
+All pull requests are automatically tested with:
+
+1. **Test Matrix**: Python 3.8-3.12 × Django 4.2-5.1
+2. **Code Quality**: Black, Ruff, MyPy
+3. **Coverage**: Minimum 70% code coverage required
+4. **Pre-commit**: All hooks must pass
+
+#### GitHub Actions Workflows
+
+- **Tests** (`test.yml`): Runs on every push and PR
+- **Code Quality** (`quality.yml`): Checks code style and linting
+- **Dependabot**: Weekly dependency updates
+
+#### Local Testing
+
+Test against specific Python/Django versions:
+```bash
+# Test with specific Django version
+pip install "Django~=5.0.0"
+pytest
+
+# Run the same checks as CI
+make test
+make lint
+make typecheck
 ```
 
 ### Commit Messages

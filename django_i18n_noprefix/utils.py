@@ -35,6 +35,11 @@ def activate_language(request: HttpRequest, lang_code: str) -> bool:
     if is_valid_language(lang_code):
         translation.activate(lang_code)
         request.LANGUAGE_CODE = lang_code
+
+        # Save to session if available
+        if hasattr(request, "session"):
+            request.session["django_language"] = lang_code
+
         return True
     return False
 

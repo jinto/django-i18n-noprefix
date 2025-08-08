@@ -4,6 +4,7 @@ Views for django-i18n-noprefix.
 
 import json
 
+from django.conf import settings
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.views.decorators.cache import never_cache
@@ -47,8 +48,41 @@ def change_language(request: HttpRequest, lang_code: str) -> HttpResponse:
     # Redirect to the next URL
     response = redirect(next_url)
 
-    # The middleware will handle saving to session/cookie
-    # based on the changed request.LANGUAGE_CODE
+    # Save language to cookie (session will be saved by activate_language)
+    response.set_cookie(
+        key=settings.LANGUAGE_COOKIE_NAME,
+        value=lang_code,
+        max_age=(
+            settings.LANGUAGE_COOKIE_AGE
+            if hasattr(settings, "LANGUAGE_COOKIE_AGE")
+            else 365 * 24 * 60 * 60
+        ),
+        path=(
+            settings.LANGUAGE_COOKIE_PATH
+            if hasattr(settings, "LANGUAGE_COOKIE_PATH")
+            else "/"
+        ),
+        domain=(
+            settings.LANGUAGE_COOKIE_DOMAIN
+            if hasattr(settings, "LANGUAGE_COOKIE_DOMAIN")
+            else None
+        ),
+        secure=(
+            settings.LANGUAGE_COOKIE_SECURE
+            if hasattr(settings, "LANGUAGE_COOKIE_SECURE")
+            else False
+        ),
+        httponly=(
+            settings.LANGUAGE_COOKIE_HTTPONLY
+            if hasattr(settings, "LANGUAGE_COOKIE_HTTPONLY")
+            else False
+        ),
+        samesite=(
+            settings.LANGUAGE_COOKIE_SAMESITE
+            if hasattr(settings, "LANGUAGE_COOKIE_SAMESITE")
+            else "Lax"
+        ),
+    )
 
     return response
 
