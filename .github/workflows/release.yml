@@ -93,7 +93,7 @@ jobs:
           python-version: '3.10'
 
       - name: Download artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: dist
           path: dist/
@@ -135,7 +135,7 @@ jobs:
           python-version: '3.10'
 
       - name: Download artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: dist
           path: dist/
@@ -164,7 +164,7 @@ jobs:
           fetch-depth: 0  # 전체 히스토리 가져오기 (릴리즈 노트 생성용)
 
       - name: Download artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: dist
           path: dist/
